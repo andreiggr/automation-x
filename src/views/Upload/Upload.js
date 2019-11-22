@@ -2,12 +2,12 @@ import React from 'react';
 import { TextField, Grid, FormControlLabel, Checkbox } from '@material-ui/core';
 import ContentTable from 'components/ContentTable';
 
-const phoneImg = require('./phone.png');
+const phoneImg = require('../../assets/phone.png');
 
 const Upload = () => {
   return (
 
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: '20px' }}>
       <Grid
         container
         direction="row"
@@ -17,7 +17,7 @@ const Upload = () => {
           item
           xs={6}
         >
-          <p style={{ fontSize: "22px", fontWeight: "500", marginTop: "36px", marginLeft: "18px" }}>Upload Source Project</p>
+          <p style={{ fontSize: '22px', fontWeight: '500', marginTop: '36px', marginLeft: '18px' }}>Upload Source Project</p>
           <TextField
             fullWidth
             label="GitHub URL"
@@ -36,17 +36,17 @@ const Upload = () => {
             select
             // eslint-disable-next-line react/jsx-sort-props
             SelectProps={{ native: true }}
-            value={"Flutter Version"}
+            value={'Flutter Version'}
             variant="outlined"
           >
 
             <option
-              value={"Very version"}
+              value={'Very version'}
             >
               Very version
                   </option>
           </TextField>
-          <p style={{ fontSize: "16px", fontWeight: "500", marginTop: "36px", marginLeft: "18px" }}>Build on*</p>
+          <p style={{ fontSize: '16px', fontWeight: '500', marginTop: '36px', marginLeft: '18px' }}>Build on*</p>
           <Grid
             container
             direction="column"
@@ -83,7 +83,9 @@ const Upload = () => {
         </Grid>
 
         <div style={{}}>
-          <img style={{maxHeight:"900px"}} src={phoneImg} alt="" />
+          <img style={{ maxHeight: "900px" }}
+src={phoneImg}
+alt="" />
         </div>
       </Grid>
     </div>

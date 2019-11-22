@@ -1,15 +1,8 @@
 {
   "parser": "babel-eslint",
   "rules": {
-    
+    "no-console": 0,
     "comma-dangle": 0,
-    // "indent": [
-    //   2,
-    //   2,
-    //   {
-    //     "SwitchCase": 1
-    //   }
-    // ],
     "jsx-quotes": 1,
     "linebreak-style": [
       2,
@@ -29,10 +22,6 @@
     ],
     "react/jsx-closing-bracket-location": 1,
     "react/jsx-curly-spacing": 1,
-    // "react/jsx-indent-props": [
-    //   2,
-    //   2
-    // ],
     "react/jsx-max-props-per-line": 1,
     "react/jsx-no-duplicate-props": 1,
     "react/jsx-no-literals": 0,

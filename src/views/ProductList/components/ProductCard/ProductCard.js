@@ -15,18 +15,20 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth:'350px',
+    maxWidth: '350px',
   },
   imageContainer: {
-    height: 64,
-    width: 64,
+    height: 100,
+    width: 100,
     margin: '0 auto',
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: '5px',
     overflow: 'hidden',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    cursor: 'pointer',
+    marginBottom: 10
   },
   image: {
     width: '100%'
@@ -62,6 +64,7 @@ const ProductCard = props => {
         <Typography
           align="center"
           gutterBottom
+          style={{ cursor: 'pointer' }}
           variant="h4"
         >
           {product.title}

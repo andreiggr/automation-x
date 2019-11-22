@@ -12,7 +12,8 @@ import {
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView,
-  Upload as UploadView
+  Upload as UploadView,
+  Product as ProductView
 } from './views';
 
 const Routes = () => {
@@ -21,7 +22,19 @@ const Routes = () => {
       <Redirect
         exact
         from="/"
-        to="/dashboard"
+        to="/products"
+      />
+      <RouteWithLayout
+        component={ProductListView}
+        exact
+        layout={MainLayout}
+        path="/products"
+      />
+      <RouteWithLayout
+        component={ProductView}
+        exact
+        layout={MainLayout}
+        path="/product/:id"
       />
       <RouteWithLayout
         component={DashboardView}
@@ -34,12 +47,6 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/users"
-      />
-      <RouteWithLayout
-        component={ProductListView}
-        exact
-        layout={MainLayout}
-        path="/products"
       />
       <RouteWithLayout
         component={UploadView}

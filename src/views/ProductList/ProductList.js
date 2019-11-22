@@ -42,8 +42,8 @@ const ProductList = () => {
             <Grid
               item
               key={product.id}
-              xs={6}
               sm={3}
+              xs={6}
             >
               <ProductCard product={product} />
             </Grid>
@@ -58,16 +58,16 @@ const ProductList = () => {
             <Grid
               item
               key={product.id}
-              xs={6}
               sm={3}
+              xs={6}
             >
               <ProductCard product={product} />
             </Grid>
           ))}
         </Grid>
       </div>
-      
-      
+
+
     </div>
   );
 };
