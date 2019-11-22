@@ -25,7 +25,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import mockData from './data';
 import { StatusBullet } from 'components';
 
-const phoneImage = "../../assets/phone.png";
 
 const useStyles = makeStyles(theme => ({
     root: {

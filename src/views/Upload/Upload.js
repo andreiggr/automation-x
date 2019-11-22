@@ -2,80 +2,90 @@ import React from 'react';
 import { TextField, Grid, FormControlLabel, Checkbox } from '@material-ui/core';
 import ContentTable from 'components/ContentTable';
 
+const phoneImg = require('./phone.png');
+
 const Upload = () => {
   return (
 
     <div style={{ padding: "20px" }}>
       <Grid
-        item
-        xs={4}
-      >
-        <p style={{ fontSize: "22px", fontWeight: "500", marginTop: "36px", marginLeft: "18px" }}>Upload Source Project</p>
-        <TextField
-          fullWidth
-          label="GitHub URL"
-          margin="dense"
-          name="URL"
-          required
-          variant="outlined"
-        />
-        <TextField
-          fullWidth
-          label="Select State"
-          margin="dense"
-          name="state"
-          //onChange={handleChange}
-          required
-          select
-          // eslint-disable-next-line react/jsx-sort-props
-          SelectProps={{ native: true }}
-          value={"Flutter Version"}
-          variant="outlined"
-        >
-
-          <option
-            value={"Very version"}
-          >
-            Very version
-                  </option>
-        </TextField>
-      </Grid>
-
-      <p style={{ fontSize: "16px", fontWeight: "500", marginTop: "36px", marginLeft: "18px" }}>Build on*</p>
-      <Grid
         container
-        direction="column"
+        direction="row"
       >
-        <FormControlLabel
-          control={
-            <Checkbox
-              color="primary"
-              defaultChecked //
-            />
-          }
-          label="Android"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              color="primary"
-              defaultChecked //
-            />
-          }
-          label="iOS"
-        />
-      </Grid>
+        <Grid
+          direction="column"
+          item
+          xs={6}
+        >
+          <p style={{ fontSize: "22px", fontWeight: "500", marginTop: "36px", marginLeft: "18px" }}>Upload Source Project</p>
+          <TextField
+            fullWidth
+            label="GitHub URL"
+            margin="dense"
+            name="URL"
+            required
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            label="Select State"
+            margin="dense"
+            name="state"
+            //onChange={handleChange}
+            required
+            select
+            // eslint-disable-next-line react/jsx-sort-props
+            SelectProps={{ native: true }}
+            value={"Flutter Version"}
+            variant="outlined"
+          >
 
-      <Grid
-        item
-        lg={6}
-        md={8}
-        xl={6}
-        xs={8}
-      >
-        <ContentTable />
+            <option
+              value={"Very version"}
+            >
+              Very version
+                  </option>
+          </TextField>
+          <p style={{ fontSize: "16px", fontWeight: "500", marginTop: "36px", marginLeft: "18px" }}>Build on*</p>
+          <Grid
+            container
+            direction="column"
+          >
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  defaultChecked //
+                />
+              }
+              label="Android"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  defaultChecked //
+                />
+              }
+              label="iOS"
+            />
+          </Grid>
+
+          <Grid
+            item
+            lg={12}
+            md={12}
+            xl={12}
+            xs={12}
+          >
+            <ContentTable />
+          </Grid>
+        </Grid>
+
+        <div style={{}}>
+          <img style={{maxHeight:"900px"}} src={phoneImg} alt="" />
+        </div>
       </Grid>
-      <div style={{ backgroundImage: `url("../../assets/phone.png")` }} />
     </div>
   );
 }
