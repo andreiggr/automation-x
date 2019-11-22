@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { IconButton, Grid, Typography } from '@material-ui/core';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
+import { Grid, Typography } from '@material-ui/core';
 import { ProductsToolbar, ProductCard } from './components';
 import mockData from './data';
 
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3)
+  },
+  categoryTitle: {
+    fontSize: 22,
+    marginBottom: 29,
+    marginTop: 29
   },
   content: {
     marginTop: theme.spacing(2)
@@ -31,6 +33,7 @@ const ProductList = () => {
     <div className={classes.root}>
       <ProductsToolbar />
       <div className={classes.content}>
+        <Typography className={classes.categoryTitle}>Featured Flutter Projects</Typography>
         <Grid
           container
           spacing={1}
@@ -39,24 +42,32 @@ const ProductList = () => {
             <Grid
               item
               key={product.id}
-              lg={4}
-              md={6}
-              xs={12}
+              xs={6}
+              sm={3}
+            >
+              <ProductCard product={product} />
+            </Grid>
+          ))}
+        </Grid>
+        <Typography className={classes.categoryTitle}>Recent</Typography>
+        <Grid
+          container
+          spacing={1}
+        >
+          {products.map(product => (
+            <Grid
+              item
+              key={product.id}
+              xs={6}
+              sm={3}
             >
               <ProductCard product={product} />
             </Grid>
           ))}
         </Grid>
       </div>
-      <div className={classes.pagination}>
-        <Typography variant="caption">1-6 of 20</Typography>
-        <IconButton>
-          <ChevronLeftIcon />
-        </IconButton>
-        <IconButton>
-          <ChevronRightIcon />
-        </IconButton>
-      </div>
+      
+      
     </div>
   );
 };

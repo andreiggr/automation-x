@@ -2,16 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
-import { Button } from '@material-ui/core';
-
+import { Button, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { SearchInput } from 'components';
 
 const useStyles = makeStyles(theme => ({
-  root: {},
+  root: { marginBottom: 100 },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 95,
+  },
   row: {
     height: '42px',
     display: 'flex',
     alignItems: 'center',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
     marginTop: theme.spacing(1)
   },
   spacer: {
@@ -24,7 +29,9 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1)
   },
   searchInput: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    height: '36px',
+    maxWidth: '200px'
   }
 }));
 
@@ -39,9 +46,95 @@ const ProductsToolbar = props => {
       className={clsx(classes.root, className)}
     >
       <div className={classes.row}>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="UI">UI</InputLabel>
+          <Select
+            labelId="UI"
+          //value={age}
+          //onChange={handleChange}
+          >
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="UI">Media</InputLabel>
+          <Select
+            labelId="UI"
+          //value={age}
+          //onChange={handleChange}
+          >
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="UI">Elements</InputLabel>
+          <Select
+            labelId="UI"
+          //value={age}
+          //onChange={handleChange}
+          >
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="UI">Input</InputLabel>
+          <Select
+            labelId="UI"
+          //value={age}
+          //onChange={handleChange}
+          >
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="UI">Menu</InputLabel>
+          <Select
+            labelId="UI"
+          //value={age}
+          //onChange={handleChange}
+          >
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="UI">Components</InputLabel>
+          <Select
+            labelId="UI"
+          //value={age}
+          //onChange={handleChange}
+          >
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="UI">Apps</InputLabel>
+          <Select
+            labelId="UI"
+          //value={age}
+          //onChange={handleChange}
+          >
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormControl>
         <span className={classes.spacer} />
-        <Button className={classes.importButton}>Import</Button>
-        <Button className={classes.exportButton}>Export</Button>
+        <SearchInput
+          className={classes.searchInput}
+          placeholder="Search product"
+        />
         <Button
           color="primary"
           variant="contained"
@@ -49,12 +142,7 @@ const ProductsToolbar = props => {
           Add product
         </Button>
       </div>
-      <div className={classes.row}>
-        <SearchInput
-          className={classes.searchInput}
-          placeholder="Search product"
-        />
-      </div>
+
     </div>
   );
 };
