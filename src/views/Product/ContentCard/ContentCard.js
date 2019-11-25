@@ -1,19 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import CallSplitIcon from '@material-ui/icons/CallSplit';
-import { Link } from 'react-router-dom';
-import Iframe from 'react-iframe';
+import ReactMarkdown from 'react-markdown';
+import MarkdownGithub from 'react-markdown-github';
 import {
     Card,
     CardContent,
     Typography,
-    Grid,
-    Divider
 } from '@material-ui/core';
+import Axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -26,16 +22,38 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
     },
-    iframe: {
-        height: '450px'
+    markdown: {
+        width: '850px'
     }
 
 }));
+
+function Image(props) {
+    return <img
+        {...props}
+        style={{ maxWidth: '100%' }}
+           />
+}
 
 const ContentCard = props => {
     const { className, ...rest } = props;
 
     const classes = useStyles();
+
+    const [markdown, setMarkdown] = useState('')
+
+    useEffect(() => {
+        Axios.get('https://raw.githubusercontent.com/mitesh77/Best-Flutter-UI-Templates/master/README.md')
+            .then((res) => setMarkdown(res.data))
+    }, [])
+
+    //const gitMarkdown = 'https://api.github.com/mitesh77';
+    // /repos/:owner/:repo/MarkdownGithubwn).then(res => console.log(res))
+
+    const transformImageUri = input =>
+        /^https?:/.test(input)
+            ? input
+            : `https://raw.githubusercontent.com/mitesh77/Best-Flutter-UI-Templates/master/${input}`
 
     return (
         <Card
@@ -50,10 +68,15 @@ const ContentCard = props => {
                     Flutter Layout Grid
                 </Typography>
                 <div className={classes.content}>
-                    <Iframe
-                        className={classes.iframe}
-                        url="http://github.com/mitesh77/Best-Flutter-UI-Templates/blob/master/README.md"
+                    {/* <MarkdownRender /> */}
+                    <ReactMarkdown
+                        className={classes.markdown}
+                        renderers={{ image: Image }}
+                        source={markdown}
+                        transformImageUri={(uri) => transformImageUri(uri)}
+                        transformLinkUri={(uri) => transformImageUri(uri)}
                     />
+
                 </div>
             </CardContent>
         </Card>
