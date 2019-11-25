@@ -10,6 +10,8 @@ import {
     Typography,
 } from '@material-ui/core';
 import Axios from 'axios';
+import Image from './Image';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,12 +30,13 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-function Image(props) {
-    return <img
-        {...props}
-        style={{ maxWidth: '100%' }}
-           />
-}
+// const ImageOrLink = props => {
+//     if (props.href.match(/\.(jpe?g|png|gif)$/)) {
+//         return <img src={props.href} />
+//     }
+
+//     return <a href={props.href}>{props.children}</a>
+// }
 
 const ContentCard = props => {
     const { className, ...rest } = props;
@@ -55,6 +58,7 @@ const ContentCard = props => {
             ? input
             : `https://raw.githubusercontent.com/mitesh77/Best-Flutter-UI-Templates/master/${input}`
 
+
     return (
         <Card
             {...rest}
@@ -71,10 +75,11 @@ const ContentCard = props => {
                     {/* <MarkdownRender /> */}
                     <ReactMarkdown
                         className={classes.markdown}
+                        escapeHtml={false}
                         renderers={{ image: Image }}
                         source={markdown}
                         transformImageUri={(uri) => transformImageUri(uri)}
-                        transformLinkUri={(uri) => transformImageUri(uri)}
+                        transformLinkUri={(src) => transformImageUri(src)}
                     />
 
                 </div>

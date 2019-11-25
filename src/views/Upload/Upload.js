@@ -83,9 +83,11 @@ const Upload = () => {
         </Grid>
 
         <div style={{}}>
-          <img style={{ maxHeight: "900px" }}
-src={phoneImg}
-alt="" />
+          <img
+            alt=""
+            src={phoneImg}
+            style={{ maxHeight: '900px' }}
+          />
         </div>
       </Grid>
     </div>

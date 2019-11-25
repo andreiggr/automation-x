@@ -1,6 +1,7 @@
 {
   "parser": "babel-eslint",
   "rules": {
+    "no-unused-vars": "warn",
     "no-console": 0,
     "comma-dangle": 0,
     "jsx-quotes": 1,
