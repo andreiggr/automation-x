@@ -10,7 +10,7 @@ import {
     Typography,
 } from '@material-ui/core';
 import Axios from 'axios';
-import Image from './Image';
+import { Image, ImageOrLink } from './Image';
 
 
 const useStyles = makeStyles(theme => ({
@@ -25,18 +25,12 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
     },
     markdown: {
-        width: '850px'
+        width: '700px'
     }
 
 }));
 
-// const ImageOrLink = props => {
-//     if (props.href.match(/\.(jpe?g|png|gif)$/)) {
-//         return <img src={props.href} />
-//     }
 
-//     return <a href={props.href}>{props.children}</a>
-// }
 
 const ContentCard = props => {
     const { className, ...rest } = props;
@@ -45,19 +39,19 @@ const ContentCard = props => {
 
     const [markdown, setMarkdown] = useState('')
 
+    const gitURL = props.git;
+    const rawGit = gitURL.split('github').join('raw.githubusercontent') + '/master'
+    const rawReadme = rawGit + '/README.md';
+
     useEffect(() => {
-        Axios.get('https://raw.githubusercontent.com/mitesh77/Best-Flutter-UI-Templates/master/README.md')
+        Axios.get(rawReadme)
             .then((res) => setMarkdown(res.data))
     }, [])
-
-    //const gitMarkdown = 'https://api.github.com/mitesh77';
-    // /repos/:owner/:repo/MarkdownGithubwn).then(res => console.log(res))
 
     const transformImageUri = input =>
         /^https?:/.test(input)
             ? input
-            : `https://raw.githubusercontent.com/mitesh77/Best-Flutter-UI-Templates/master/${input}`
-
+            : `${rawGit}/${input}`
 
     return (
         <Card
@@ -72,14 +66,23 @@ const ContentCard = props => {
                     Flutter Layout Grid
                 </Typography>
                 <div className={classes.content}>
-                    {/* <MarkdownRender /> */}
-                    <ReactMarkdown
+                    {/* <ReactMarkdown
                         className={classes.markdown}
-                        escapeHtml={false}
                         renderers={{ image: Image }}
                         source={markdown}
                         transformImageUri={(uri) => transformImageUri(uri)}
                         transformLinkUri={(src) => transformImageUri(src)}
+                    /> */}
+
+                    <MarkdownGithub
+                        className={classes.markdown}
+                        renderers={{ image: Image }}
+                        skipHtml={false}
+                        source={markdown}
+                        sourceUri={rawReadme}
+                        transformImageUri={({ uri }) =>
+                            transformImageUri(uri)
+                        }
                     />
 
                 </div>
@@ -90,7 +93,7 @@ const ContentCard = props => {
 
 ContentCard.propTypes = {
     className: PropTypes.string,
-    product: PropTypes.object.isRequired
+    git: PropTypes.string
 };
 
 export default ContentCard;

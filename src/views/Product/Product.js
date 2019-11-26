@@ -39,6 +39,9 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const gitURL = 'https://github.com/mitesh77/Best-Flutter-UI-Templates'
+
+
 const Product = () => {
     const classes = useStyles();
 
@@ -69,11 +72,11 @@ const Product = () => {
                                 Run on Emulator
                             </Button>
                         </div>
-                        <GitCard />
-                        <ContentCard />
+                        <GitCard git={gitURL} />
+                        <ContentCard git={gitURL} />
                     </Grid>
                     <Grid
-                        alignContent='center'
+                        alignContent="center"
                         container
                         direction="column"
                         xs={5}

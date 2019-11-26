@@ -58,7 +58,7 @@ const GitCard = props => {
                 <div className={classes.row}>
                     <div className={classes.link}>
                         <GitHubIcon className={classes.icon} />
-                        <Link> github.com/blablabla </Link>
+                        <Link> {props.git} </Link>
                     </div>
                     <div>
                         <VisibilityIcon className={classes.icon} />
