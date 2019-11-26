@@ -69,6 +69,7 @@ const ContentCard = props => {
                     {/* <ReactMarkdown
                         className={classes.markdown}
                         renderers={{ image: Image }}
+                        skipHtml={true}
                         source={markdown}
                         transformImageUri={(uri) => transformImageUri(uri)}
                         transformLinkUri={(src) => transformImageUri(src)}
@@ -77,7 +78,7 @@ const ContentCard = props => {
                     <MarkdownGithub
                         className={classes.markdown}
                         renderers={{ image: Image }}
-                        skipHtml={false}
+                        skipHtml
                         source={markdown}
                         sourceUri={rawReadme}
                         transformImageUri={({ uri }) =>
