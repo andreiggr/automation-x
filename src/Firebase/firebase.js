@@ -1,4 +1,7 @@
 import app from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+
 const config = {
     apiKey: 'AIzaSyDU5idAuE8NMyFXlvyDRkO2B91ItyEWHNU',
     authDomain: 'automation-app-xyz3.firebaseapp.com',
@@ -12,6 +15,9 @@ const config = {
 class Firebase {
     constructor() {
         app.initializeApp(config);
+
+        this.auth = app.auth();
+        this.db = app.database();
     }
 }
 export default Firebase;
