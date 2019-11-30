@@ -26,13 +26,11 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const ProductList = ({ fetchData }) => {
+const ProductList = ({ fetchData, data }) => {
 	useEffect(() => {
 		fetchData();
 	}, []);
 	const classes = useStyles();
-
-	const [ products ] = useState(mockData);
 
 	return (
 		<div className={classes.root}>
@@ -40,7 +38,7 @@ const ProductList = ({ fetchData }) => {
 			<div className={classes.content}>
 				<Typography className={classes.categoryTitle}>Featured Flutter Projects</Typography>
 				<Grid container spacing={1}>
-					{products.map((product) => (
+					{data.map((product) => (
 						<Grid item key={product.id} sm={3} xs={6}>
 							<ProductCard product={product} />
 						</Grid>
@@ -48,7 +46,7 @@ const ProductList = ({ fetchData }) => {
 				</Grid>
 				<Typography className={classes.categoryTitle}>Recent</Typography>
 				<Grid container spacing={1}>
-					{products.map((product) => (
+					{data.map((product) => (
 						<Grid item key={product.id} sm={3} xs={6}>
 							<ProductCard product={product} />
 						</Grid>

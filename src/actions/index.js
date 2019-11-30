@@ -7,10 +7,10 @@ export function fetchDataSuccess(data) {
 	};
 }
 
-export const fetchData = () => (dispatch) => {
+export const fetchData = () => async (dispatch) => {
 	const dataRef = firebase.database().ref('models');
 
-	dataRef.on('value', (snapshot) => {
+	await dataRef.on('value', (snapshot) => {
 		let items = snapshot.val();
 
 		dispatch(fetchDataSuccess(items));
