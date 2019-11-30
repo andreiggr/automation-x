@@ -1,12 +1,18 @@
-import { dataRef } from '../Firebase/firebase';
+import firebase from '../Firebase/firebase';
 
-export const FETCH_DATA = 'FETCH_DATA';
+export function fetchDataSuccess(data) {
+	return {
+		type: 'FETCH_DATA',
+		data
+	};
+}
 
-export const fetchData = () => async (dispatch) => {
+export const fetchData = () => (dispatch) => {
+	const dataRef = firebase.database().ref('models');
+
 	dataRef.on('value', (snapshot) => {
-		dispatch({
-			type: FETCH_DATA,
-			payload: snapshot.val()
-		});
+		let items = snapshot.val();
+
+		dispatch(fetchDataSuccess(items));
 	});
 };

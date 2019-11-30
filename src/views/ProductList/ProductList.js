@@ -61,7 +61,7 @@ const ProductList = ({ fetchData }) => {
 
 const mapStateToProps = (state) => {
 	return {
-		items: state.items
+		data: state.data
 	};
 };
 

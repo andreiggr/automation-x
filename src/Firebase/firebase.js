@@ -14,5 +14,6 @@ const config = {
 };
 
 firebase.initializeApp(config);
-const databaseRef = firebase.database().ref();
-export const dataRef = databaseRef.child('data');
+//const databaseRef = firebase.database().ref();
+//export const dataRef = databaseRef.child('data');
+export default firebase;
