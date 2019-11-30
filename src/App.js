@@ -11,30 +11,26 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import './assets/scss/index.scss';
 import validators from './common/validators';
 import Routes from './Routes';
-import Firebase, { FirebaseContext } from './Firebase';
-
 
 const browserHistory = createBrowserHistory();
 
 Chart.helpers.extend(Chart.elements.Rectangle.prototype, {
-  draw: chartjs.draw
+	draw: chartjs.draw
 });
 
 validate.validators = {
-  ...validate.validators,
-  ...validators
+	...validate.validators,
+	...validators
 };
 
 export default class App extends Component {
-  render() {
-    return (
-      <FirebaseContext.Provider value={new Firebase()}>
-        <ThemeProvider theme={theme}>
-          <Router history={browserHistory}>
-            <Routes />
-          </Router>
-        </ThemeProvider>
-      </FirebaseContext.Provider>
-    );
-  }
+	render() {
+		return (
+			<ThemeProvider theme={theme}>
+				<Router history={browserHistory}>
+					<Routes />
+				</Router>
+			</ThemeProvider>
+		);
+	}
 }
