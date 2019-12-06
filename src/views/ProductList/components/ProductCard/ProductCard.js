@@ -40,13 +40,18 @@ const useStyles = makeStyles(theme => ({
   statsIcon: {
     color: theme.palette.icon,
     marginRight: theme.spacing(1)
-  }
+  },
+
 }));
 
 const ProductCard = props => {
   const { className, product, ...rest } = props;
 
   const classes = useStyles();
+
+  const onNavigate = () => {
+    console.log(props)
+  }
 
   return (
     <Card
@@ -58,12 +63,14 @@ const ProductCard = props => {
           <img
             alt="Product"
             className={classes.image}
+            onClick={() => onNavigate()}
             src={product.imageUrl}
           />
         </div>
         <Typography
           align="center"
           gutterBottom
+          onClick={() => onNavigate()}
           style={{ cursor: 'pointer' }}
           variant="h4"
         >

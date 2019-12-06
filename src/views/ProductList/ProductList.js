@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid, Typography } from '@material-ui/core';
 import { ProductsToolbar, ProductCard } from './components';
-import mockData from './data';
 import { fetchData } from 'actions';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { withRouter } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -37,17 +38,33 @@ const ProductList = ({ fetchData, data }) => {
 			<ProductsToolbar />
 			<div className={classes.content}>
 				<Typography className={classes.categoryTitle}>Featured Flutter Projects</Typography>
-				<Grid container spacing={1}>
+				<Grid
+					container
+					spacing={1}
+				>
 					{data.map((product) => (
-						<Grid item key={product.id} sm={3} xs={6}>
+						<Grid
+							item
+							key={product.id}
+							sm={3}
+							xs={6}
+						>
 							<ProductCard product={product} />
 						</Grid>
 					))}
 				</Grid>
 				<Typography className={classes.categoryTitle}>Recent</Typography>
-				<Grid container spacing={1}>
+				<Grid
+					container
+					spacing={1}
+				>
 					{data.map((product) => (
-						<Grid item key={product.id} sm={3} xs={6}>
+						<Grid
+							item
+							key={product.id}
+							sm={3}
+							xs={6}
+						>
 							<ProductCard product={product} />
 						</Grid>
 					))}
@@ -69,4 +86,9 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
+export default compose(
+	withRouter,
+	connect(mapStateToProps, mapDispatchToProps)
+)(ProductList);
+
+
