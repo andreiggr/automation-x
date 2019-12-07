@@ -16,3 +16,10 @@ export const fetchData = () => async (dispatch) => {
 		dispatch(fetchDataSuccess(items));
 	});
 };
+
+export const selectProduct = (selectedProduct) => {
+	return {
+		type: 'SELECT_PRODUCT',
+		selectedProduct
+	};
+};

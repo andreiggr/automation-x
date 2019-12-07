@@ -5,8 +5,10 @@ import { ProductsToolbar } from '../ProductList/components';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { GitCard } from './GitCard';
 import { ContentCard } from './ContentCard';
-import { FirebaseContext } from '../../Firebase';
 import PropTypes from 'prop-types';
+import { fetchData, selectProduct } from 'actions';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const phoneImg = require('../../assets/phone.png');
 
@@ -41,9 +43,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const gitURL = 'https://github.com/mitesh77/Best-Flutter-UI-Templates';
-
-const Product = () => {
+const Product = ({ selectedProduct }) => {
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>
@@ -52,16 +52,16 @@ const Product = () => {
 				<Grid container direction="row" spacing={3} xs={12}>
 					<Grid container direction="column" xs={7}>
 						<div className={classes.contentBar}>
-							<div className={classes.backButton}>
+							<Link to="/products" className={classes.backButton}>
 								<ArrowBackIosIcon fontSize="small" />
-								<Typography className={classes.categoryTitle}>Project Name</Typography>
-							</div>
+								<Typography className={classes.categoryTitle}>Go back</Typography>
+							</Link>
 							<Button color="primary" variant="contained">
 								Run on Emulator
 							</Button>
 						</div>
-						<GitCard git={gitURL} />
-						<ContentCard git={gitURL} />
+						<GitCard git={selectedProduct.linkRepo} />
+						<ContentCard git={selectedProduct.linkRepo} />
 					</Grid>
 					<Grid alignContent="center" container direction="column" xs={5}>
 						<div style={{}}>
@@ -77,6 +77,17 @@ const Product = () => {
 Product.propTypes = {
 	classes: PropTypes.object.isRequired
 };
-export default Product;
 
-//export default withStyles(classes)(Product);
+const mapStateToProps = (state) => {
+	return {
+		selectedProduct: state.selectedProduct
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		selectProduct: (product) => dispatch(selectProduct(product))
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

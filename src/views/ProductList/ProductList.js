@@ -28,47 +28,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductList = ({ fetchData, data }) => {
-	useEffect(() => {
-		fetchData();
-	}, []);
+	useEffect(
+		() => {
+			fetchData();
+		},
+		[ data ]
+	);
 	const classes = useStyles();
 
+	//make sure to filter products here. Now its 30 to move fast
+	const featured = data;
 	return (
 		<div className={classes.root}>
 			<ProductsToolbar />
 			<div className={classes.content}>
 				<Typography className={classes.categoryTitle}>Featured Flutter Projects</Typography>
-				<Grid
-					container
-					spacing={1}
-				>
-					{data.map((product) => (
-						<Grid
-							item
-							key={product.id}
-							sm={3}
-							xs={6}
-						>
-							<ProductCard product={product} />
-						</Grid>
-					))}
+				<Grid container spacing={1}>
+					{featured.map(
+						(product, index) =>
+							index < 10 && (
+								<Grid item key={product.id} sm={3} xs={6}>
+									<ProductCard product={product} />
+								</Grid>
+							)
+					)}
 				</Grid>
 				<Typography className={classes.categoryTitle}>Recent</Typography>
-				<Grid
-					container
-					spacing={1}
-				>
+				{/* <Grid container spacing={1}>
 					{data.map((product) => (
-						<Grid
-							item
-							key={product.id}
-							sm={3}
-							xs={6}
-						>
+						<Grid item key={product.id} sm={3} xs={6}>
 							<ProductCard product={product} />
 						</Grid>
 					))}
-				</Grid>
+				</Grid> */}
 			</div>
 		</div>
 	);
@@ -86,9 +78,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default compose(
-	withRouter,
-	connect(mapStateToProps, mapDispatchToProps)
-)(ProductList);
-
-
+export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(ProductList);
