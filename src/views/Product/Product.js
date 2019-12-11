@@ -47,25 +47,47 @@ const Product = ({ selectedProduct }) => {
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>
-			<ProductsToolbar />
 			<div className={classes.content}>
-				<Grid container direction="row" spacing={3} xs={12}>
-					<Grid container direction="column" xs={7}>
+				<Grid
+					container
+					direction="row"
+					spacing={3}
+					xs={12}
+				>
+					<Grid
+						container
+						direction="column"
+						xs={7}
+					>
 						<div className={classes.contentBar}>
-							<Link to="/products" className={classes.backButton}>
+							<Link
+								className={classes.backButton}
+								to="/products"
+							>
 								<ArrowBackIosIcon fontSize="small" />
 								<Typography className={classes.categoryTitle}>Go back</Typography>
 							</Link>
-							<Button color="primary" variant="contained">
+							<Button
+								color="primary"
+								variant="contained"
+							>
 								Run on Emulator
 							</Button>
 						</div>
 						<GitCard git={selectedProduct.linkRepo} />
 						<ContentCard git={selectedProduct.linkRepo} />
 					</Grid>
-					<Grid alignContent="center" container direction="column" xs={5}>
+					<Grid
+						alignContent="center"
+						container
+						direction="column"
+						xs={5}
+					>
 						<div style={{}}>
-							<img src={phoneImg} style={{ maxHeight: '900px' }} />
+							<img
+								src={phoneImg}
+								style={{ maxHeight: '900px' }}
+							/>
 						</div>
 					</Grid>
 				</Grid>

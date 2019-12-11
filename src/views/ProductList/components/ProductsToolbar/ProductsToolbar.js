@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Button, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { SearchInput } from 'components';
+import { Link } from 'react-router-dom';
+
+import { uiFilters, mediaFilters, componentsFilters, appsFilters, elementsFilters, menuFilters, inputFilters } from './filterData';
 
 const useStyles = makeStyles(theme => ({
   root: { marginBottom: 100 },
@@ -38,6 +41,15 @@ const useStyles = makeStyles(theme => ({
 const ProductsToolbar = props => {
   const { className, ...rest } = props;
 
+  const [uiFilter, setUiFilter] = useState('');
+  const [mediaFilter, setMediaFilter] = useState('');
+  const [componentsFilter, setComponentsFilter] = useState('');
+  const [appFilter, setAppFilter] = useState('');
+  const [elementsFilter, setElementsFilter] = useState('');
+  const [menuFilter, setMenuFilter] = useState('');
+  const [inputFilter, setInputFilter] = useState('');
+
+
   const classes = useStyles();
 
   return (
@@ -50,84 +62,91 @@ const ProductsToolbar = props => {
           <InputLabel id="UI">UI</InputLabel>
           <Select
             labelId="UI"
-          //value={age}
-          //onChange={handleChange}
+            onChange={(event) => setUiFilter(event.target.value)}
+            value={uiFilter}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {uiFilters.map(item =>
+              <MenuItem value={item}>{item}</MenuItem>
+
+            )}
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
-          <InputLabel id="UI">Media</InputLabel>
+          <InputLabel id="media">Media</InputLabel>
           <Select
-            labelId="UI"
-          //value={age}
-          //onChange={handleChange}
+            labelId="media"
+            onChange={(event) => setMediaFilter(event.target.value)}
+            value={mediaFilter}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {mediaFilters.map(item =>
+              <MenuItem value={item}>{item}</MenuItem>
+
+            )}
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
-          <InputLabel id="UI">Elements</InputLabel>
+          <InputLabel id="el">Elements</InputLabel>
           <Select
-            labelId="UI"
-          //value={age}
-          //onChange={handleChange}
+            labelId="el"
+            onChange={(event) => setElementsFilter(event.target.value)}
+            value={elementsFilter}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {elementsFilters.map(item =>
+              <MenuItem value={item}>{item}</MenuItem>
+
+            )}
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
-          <InputLabel id="UI">Input</InputLabel>
+          <InputLabel id="input">Input</InputLabel>
           <Select
-            labelId="UI"
-          //value={age}
-          //onChange={handleChange}
+            labelId="input"
+            onChange={(event) => setInputFilter(event.target.value)}
+            value={inputFilter}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {inputFilters.map(item =>
+              <MenuItem value={item}>{item}</MenuItem>
+
+            )}
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
-          <InputLabel id="UI">Menu</InputLabel>
+          <InputLabel id="menu">Menu</InputLabel>
           <Select
-            labelId="UI"
-          //value={age}
-          //onChange={handleChange}
+            labelId="menu"
+            onChange={(event) => setMenuFilter(event.target.value)}
+            value={menuFilter}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {menuFilters.map(item =>
+              <MenuItem value={item}>{item}</MenuItem>
+
+            )}
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
-          <InputLabel id="UI">Components</InputLabel>
+          <InputLabel id="COMP">Components</InputLabel>
           <Select
-            labelId="UI"
-          //value={age}
-          //onChange={handleChange}
+            labelId="COMP"
+            onChange={(event) => setComponentsFilter(event.target.value)}
+            value={componentsFilter}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {componentsFilters.map(item =>
+              <MenuItem value={item}>{item}</MenuItem>
+
+            )}
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
-          <InputLabel id="UI">Apps</InputLabel>
+          <InputLabel id="APPS">Apps</InputLabel>
           <Select
-            labelId="UI"
-          //value={age}
-          //onChange={handleChange}
+            labelId="APPS"
+            onChange={(event) => setAppFilter(event.target.value)}
+            value={appFilter}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {appsFilters.map(item =>
+              <MenuItem value={item}>{item}</MenuItem>
+
+            )}
           </Select>
         </FormControl>
         <span className={classes.spacer} />
@@ -135,12 +154,14 @@ const ProductsToolbar = props => {
           className={classes.searchInput}
           placeholder="Search product"
         />
-        <Button
-          color="primary"
-          variant="contained"
-        >
-          Add product
+        <Link to="/upload">
+          <Button
+            color="primary"
+            variant="contained"
+          >
+            Add product
         </Button>
+        </Link>
       </div>
 
     </div>
