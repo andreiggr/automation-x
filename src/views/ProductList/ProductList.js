@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const ProductList = ({ fetchData, data, activeFilter }) => {
+const ProductList = ({ fetchData, data, activeFilter, searchData }) => {
 
 	const [dataLimit, setDataLimit] = useState(12);
 
@@ -47,13 +47,24 @@ const ProductList = ({ fetchData, data, activeFilter }) => {
 
 	const classes = useStyles();
 
+	const filterData = (data, searchData) => {
+		data.filter(product => {
+			let title = product.title.toLowerCase();
+			return title.indexOf(
+				searchData.toLowerCase()) !== -1
+		})
+	}
+
 	const featured = data.slice(0, 4);
 	const recent = data.slice(0, dataLimit);
 	const filteredResults = activeFilter ? recent.filter(product => product.tags.includes(activeFilter)) : recent;
+	const searchResults = searchData ? filterData(data, searchData) : filteredResults;
+
 
 	return (
 		<div className={classes.root}>
 			<ProductsToolbar />
+			<button onClick={() => console.log(data)}>konsole</button>
 			<div className={classes.content}>
 				{!activeFilter &&
 					<React.Fragment>
@@ -110,7 +121,8 @@ const ProductList = ({ fetchData, data, activeFilter }) => {
 const mapStateToProps = (state) => {
 	return {
 		data: state.data,
-		activeFilter: state.activeFilter
+		activeFilter: state.activeFilter,
+		searchData: state.searchData,
 	};
 };
 

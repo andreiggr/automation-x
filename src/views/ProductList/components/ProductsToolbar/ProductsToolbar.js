@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { uiFilters, mediaFilters, componentsFilters, appsFilters, elementsFilters, menuFilters, inputFilters } from './filterData';
-import { setActiveFilter } from 'actions';
+import { setActiveFilter, setSearchData } from 'actions';
 
 const useStyles = makeStyles(theme => ({
   root: { marginBottom: 100 },
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProductsToolbar = props => {
-  const { className, setActiveFilter, ...rest } = props;
+  const { className, setActiveFilter, setSearchData, ...rest } = props;
 
   const [uiFilter, setUiFilter] = useState('');
   const [mediaFilter, setMediaFilter] = useState('');
@@ -53,6 +53,10 @@ const ProductsToolbar = props => {
 
 
   const classes = useStyles();
+
+  const onSearch = (data) => {
+    setSearchData(data);
+  }
 
   const resetFilters = () => {
     setUiFilter('')
@@ -214,6 +218,7 @@ const ProductsToolbar = props => {
         <span className={classes.spacer} />
         <SearchInput
           className={classes.searchInput}
+          onChange={(event) => onSearch(event.target.value)}
           placeholder="Search product"
         />
         <Link to="/upload">
@@ -236,13 +241,16 @@ ProductsToolbar.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    activeFilter: state.activeFilter
+    activeFilter: state.activeFilter,
+    searchData: state.searchData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setActiveFilter: (activeFilter) => dispatch(setActiveFilter(activeFilter))
+    setActiveFilter: (activeFilter) => dispatch(setActiveFilter(activeFilter)),
+    setSearchData: (searchData) => dispatch(setSearchData(searchData))
+
   };
 };
 

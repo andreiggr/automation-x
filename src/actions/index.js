@@ -30,3 +30,10 @@ export const setActiveFilter = (activeFilter) => {
 		activeFilter
 	};
 };
+
+export const setSearchData = (searchData) => {
+	return {
+		type: 'SEARCH_DATA',
+		searchData
+	};
+};
