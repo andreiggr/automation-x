@@ -5,8 +5,10 @@ import { makeStyles } from '@material-ui/styles';
 import { Button, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { SearchInput } from 'components';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { uiFilters, mediaFilters, componentsFilters, appsFilters, elementsFilters, menuFilters, inputFilters } from './filterData';
+import { setActiveFilter } from 'actions';
 
 const useStyles = makeStyles(theme => ({
   root: { marginBottom: 100 },
@@ -39,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProductsToolbar = props => {
-  const { className, ...rest } = props;
+  const { className, setActiveFilter, ...rest } = props;
 
   const [uiFilter, setUiFilter] = useState('');
   const [mediaFilter, setMediaFilter] = useState('');
@@ -52,6 +54,16 @@ const ProductsToolbar = props => {
 
   const classes = useStyles();
 
+  const resetFilters = () => {
+    setUiFilter('')
+    setMediaFilter('')
+    setComponentsFilter('')
+    setAppFilter('')
+    setElementsFilter('')
+    setMenuFilter('')
+    setInputFilter('')
+  }
+
   return (
     <div
       {...rest}
@@ -62,11 +74,19 @@ const ProductsToolbar = props => {
           <InputLabel id="UI">UI</InputLabel>
           <Select
             labelId="UI"
-            onChange={(event) => setUiFilter(event.target.value)}
+            onChange={(event) => {
+              resetFilters()
+              setActiveFilter(event.target.value)
+              setUiFilter(event.target.value)
+            }}
             value={uiFilter}
           >
-            {uiFilters.map(item =>
-              <MenuItem value={item}>{item}</MenuItem>
+            {uiFilters.map((item, i) =>
+              <MenuItem
+                index={i}
+                value={item}
+              >
+                {item}</MenuItem>
 
             )}
           </Select>
@@ -75,11 +95,18 @@ const ProductsToolbar = props => {
           <InputLabel id="media">Media</InputLabel>
           <Select
             labelId="media"
-            onChange={(event) => setMediaFilter(event.target.value)}
+            onChange={(event) => {
+              resetFilters()
+              setActiveFilter(event.target.value)
+              setMediaFilter(event.target.value)
+            }}
             value={mediaFilter}
           >
-            {mediaFilters.map(item =>
-              <MenuItem value={item}>{item}</MenuItem>
+            {mediaFilters.map((item, i) =>
+              <MenuItem
+                index={i}
+                value={item}
+              >{item}</MenuItem>
 
             )}
           </Select>
@@ -88,11 +115,18 @@ const ProductsToolbar = props => {
           <InputLabel id="el">Elements</InputLabel>
           <Select
             labelId="el"
-            onChange={(event) => setElementsFilter(event.target.value)}
+            onChange={(event) => {
+              resetFilters()
+              setActiveFilter(event.target.value)
+              setElementsFilter(event.target.value)
+            }}
             value={elementsFilter}
           >
-            {elementsFilters.map(item =>
-              <MenuItem value={item}>{item}</MenuItem>
+            {elementsFilters.map((item, i) =>
+              <MenuItem
+                index={i}
+                value={item}
+              >{item}</MenuItem>
 
             )}
           </Select>
@@ -101,11 +135,18 @@ const ProductsToolbar = props => {
           <InputLabel id="input">Input</InputLabel>
           <Select
             labelId="input"
-            onChange={(event) => setInputFilter(event.target.value)}
+            onChange={(event) => {
+              resetFilters()
+              setActiveFilter(event.target.value)
+              setInputFilter(event.target.value)
+            }}
             value={inputFilter}
           >
-            {inputFilters.map(item =>
-              <MenuItem value={item}>{item}</MenuItem>
+            {inputFilters.map((item, i) =>
+              <MenuItem
+                index={i}
+                value={item}
+              >{item}</MenuItem>
 
             )}
           </Select>
@@ -114,11 +155,18 @@ const ProductsToolbar = props => {
           <InputLabel id="menu">Menu</InputLabel>
           <Select
             labelId="menu"
-            onChange={(event) => setMenuFilter(event.target.value)}
+            onChange={(event) => {
+              resetFilters()
+              setActiveFilter(event.target.value)
+              setMenuFilter(event.target.value)
+            }}
             value={menuFilter}
           >
-            {menuFilters.map(item =>
-              <MenuItem value={item}>{item}</MenuItem>
+            {menuFilters.map((item, i) =>
+              <MenuItem
+                index={i}
+                value={item}
+              >{item}</MenuItem>
 
             )}
           </Select>
@@ -127,11 +175,18 @@ const ProductsToolbar = props => {
           <InputLabel id="COMP">Components</InputLabel>
           <Select
             labelId="COMP"
-            onChange={(event) => setComponentsFilter(event.target.value)}
+            onChange={(event) => {
+              resetFilters()
+              setActiveFilter(event.target.value)
+              setComponentsFilter(event.target.value)
+            }}
             value={componentsFilter}
           >
-            {componentsFilters.map(item =>
-              <MenuItem value={item}>{item}</MenuItem>
+            {componentsFilters.map((item, i) =>
+              <MenuItem
+                index={i}
+                value={item}
+              >{item}</MenuItem>
 
             )}
           </Select>
@@ -140,11 +195,18 @@ const ProductsToolbar = props => {
           <InputLabel id="APPS">Apps</InputLabel>
           <Select
             labelId="APPS"
-            onChange={(event) => setAppFilter(event.target.value)}
+            onChange={(event) => {
+              resetFilters()
+              setActiveFilter(event.target.value)
+              setAppFilter(event.target.value)
+            }}
             value={appFilter}
           >
-            {appsFilters.map(item =>
-              <MenuItem value={item}>{item}</MenuItem>
+            {appsFilters.map((item, i) =>
+              <MenuItem
+                index={i}
+                value={item}
+              >{item}</MenuItem>
 
             )}
           </Select>
@@ -172,4 +234,17 @@ ProductsToolbar.propTypes = {
   className: PropTypes.string
 };
 
-export default ProductsToolbar;
+const mapStateToProps = (state) => {
+  return {
+    activeFilter: state.activeFilter
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setActiveFilter: (activeFilter) => dispatch(setActiveFilter(activeFilter))
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsToolbar);

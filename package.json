@@ -43,6 +43,7 @@
     "react-chartjs-2": "^2.7.6",
     "react-dom": "^16.8.6",
     "react-iframe": "^1.8.0",
+    "react-infinite-scroll-component": "^5.0.4",
     "react-markdown": "^4.2.2",
     "react-markdown-github": "^3.3.1",
     "react-perfect-scrollbar": "^1.5.3",

@@ -6,6 +6,7 @@ import { fetchData } from 'actions';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -27,40 +28,80 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const ProductList = ({ fetchData, data }) => {
+const ProductList = ({ fetchData, data, activeFilter }) => {
+
+	const [dataLimit, setDataLimit] = useState(12);
+
 	useEffect(
 		() => {
 			fetchData();
 		},
-		[ data ]
+		[data]
 	);
+
+	const fetchMoreData = () => {
+		setTimeout(() => {
+			setDataLimit(dataLimit + 8)
+		}, 300);
+	}
+
 	const classes = useStyles();
 
-	//make sure to filter products here. Now its 30 to move fast
-	const featured = data;
+	const featured = data.slice(0, 4);
+	const recent = data.slice(0, dataLimit);
+	const filteredResults = activeFilter ? recent.filter(product => product.tags.includes(activeFilter)) : recent;
+
 	return (
 		<div className={classes.root}>
 			<ProductsToolbar />
 			<div className={classes.content}>
-				<Typography className={classes.categoryTitle}>Featured Flutter Projects</Typography>
-				<Grid container spacing={1}>
-					{featured.map(
-						(product, index) =>
-							index < 10 && (
-								<Grid item key={product.id} sm={3} xs={6}>
+				{!activeFilter &&
+					<React.Fragment>
+						<Typography className={classes.categoryTitle}>Featured Flutter Projects</Typography>
+						<Grid
+							container
+							spacing={1}
+						>
+							{featured.map(
+								(product, index) =>
+									<Grid
+										item
+										key={product.id}
+										key={index}
+										sm={3}
+										xs={6}
+									>
+										<ProductCard product={product} />
+									</Grid>
+							)}
+						</Grid>
+					</React.Fragment>
+				}
+				<Typography className={classes.categoryTitle}>{activeFilter ? 'Results' : 'Recent'}</Typography>
+				<Grid
+					container
+					spacing={1}
+				>
+					<InfiniteScroll
+						dataLength={filteredResults.length}
+						hasMore
+						next={fetchMoreData}
+						style={{ minWidth: '1000px', display: 'flex', flexWrap: 'wrap' }}
+					>
+
+						{filteredResults.map(
+							(product) =>
+								<Grid
+									item
+									key={product.id}
+									sm={3}
+									xs={6}
+								>
 									<ProductCard product={product} />
 								</Grid>
-							)
-					)}
+						)}
+					</InfiniteScroll>
 				</Grid>
-				<Typography className={classes.categoryTitle}>Recent</Typography>
-				{/* <Grid container spacing={1}>
-					{data.map((product) => (
-						<Grid item key={product.id} sm={3} xs={6}>
-							<ProductCard product={product} />
-						</Grid>
-					))}
-				</Grid> */}
 			</div>
 		</div>
 	);
@@ -68,7 +109,8 @@ const ProductList = ({ fetchData, data }) => {
 
 const mapStateToProps = (state) => {
 	return {
-		data: state.data
+		data: state.data,
+		activeFilter: state.activeFilter
 	};
 };
 

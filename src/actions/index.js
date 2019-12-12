@@ -23,3 +23,10 @@ export const selectProduct = (selectedProduct) => {
 		selectedProduct
 	};
 };
+
+export const setActiveFilter = (activeFilter) => {
+	return {
+		type: 'ACTIVE_FILTER',
+		activeFilter
+	};
+};
