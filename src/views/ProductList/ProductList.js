@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const ProductList = ({ fetchData, data, activeFilter, searchData }) => {
 
 	const [dataLimit, setDataLimit] = useState(12);
+	const [results, setResults] = useState([]);
 
 	useEffect(
 		() => {
@@ -47,13 +48,14 @@ const ProductList = ({ fetchData, data, activeFilter, searchData }) => {
 
 	const classes = useStyles();
 
-	const filterData = (data, searchData) => {
-		data.filter(product => {
-			let title = product.title.toLowerCase();
-			return title.indexOf(
-				searchData.toLowerCase()) !== -1
+	const filterData = () => {
+		let filtered = data.filter(product => {
+			let title = product.title.toLowerCase().search(searchData) !== -1;
+			return title;
 		})
+		return filtered;
 	}
+
 
 	const featured = data.slice(0, 4);
 	const recent = data.slice(0, dataLimit);
@@ -64,7 +66,7 @@ const ProductList = ({ fetchData, data, activeFilter, searchData }) => {
 	return (
 		<div className={classes.root}>
 			<ProductsToolbar />
-			<button onClick={() => console.log(data)}>konsole</button>
+			<button onClick={() => console.log(filterData())}>konsole</button>
 			<div className={classes.content}>
 				{!activeFilter &&
 					<React.Fragment>
