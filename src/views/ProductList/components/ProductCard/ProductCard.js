@@ -15,10 +15,9 @@ const useStyles = makeStyles((theme) => ({
 		maxWidth: '350px'
 	},
 	imageContainer: {
-		height: 100,
-		width: 100,
+		height: 250,
+		width: 250,
 		margin: '0 auto',
-		border: `1px solid ${theme.palette.divider}`,
 		borderRadius: '5px',
 		overflow: 'hidden',
 		display: 'flex',
@@ -58,9 +57,9 @@ const ProductCard = (props) => {
 						{product.title}
 					</Typography>
 				</Link>
-				<Typography align="center" variant="body1">
+				{/* <Typography align="center" variant="body1">
 					{product.description}
-				</Typography>
+				</Typography> */}
 			</CardContent>
 			<Divider />
 			<CardActions>

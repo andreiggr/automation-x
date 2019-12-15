@@ -29,90 +29,65 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductList = ({ fetchData, data, activeFilter, searchData }) => {
-
-	const [dataLimit, setDataLimit] = useState(12);
-	const [results, setResults] = useState([]);
+	const [ dataLimit, setDataLimit ] = useState(12);
 
 	useEffect(
 		() => {
 			fetchData();
 		},
-		[data]
+		[ data ]
 	);
 
 	const fetchMoreData = () => {
 		setTimeout(() => {
-			setDataLimit(dataLimit + 8)
+			setDataLimit(dataLimit + 8);
 		}, 300);
-	}
+	};
 
 	const classes = useStyles();
 
 	const filterData = () => {
-		let filtered = data.filter(product => {
+		let filtered = data.filter((product) => {
 			let title = product.title.toLowerCase().search(searchData) !== -1;
 			return title;
-		})
+		});
 		return filtered;
-	}
-
+	};
 
 	const featured = data.slice(0, 4);
 	const recent = data.slice(0, dataLimit);
-	const filteredResults = activeFilter ? recent.filter(product => product.tags.includes(activeFilter)) : recent;
-	const searchResults = searchData ? filterData(data, searchData) : filteredResults;
-
+	const filteredResults = activeFilter ? recent.filter((product) => product.tags.includes(activeFilter)) : recent;
+	const searchResults = searchData ? filterData() : filteredResults;
 
 	return (
 		<div className={classes.root}>
 			<ProductsToolbar />
-			<button onClick={() => console.log(filterData())}>konsole</button>
 			<div className={classes.content}>
-				{!activeFilter &&
+				{!activeFilter && (
 					<React.Fragment>
 						<Typography className={classes.categoryTitle}>Featured Flutter Projects</Typography>
-						<Grid
-							container
-							spacing={1}
-						>
-							{featured.map(
-								(product, index) =>
-									<Grid
-										item
-										key={product.id}
-										key={index}
-										sm={3}
-										xs={6}
-									>
-										<ProductCard product={product} />
-									</Grid>
-							)}
+						<Grid container spacing={1}>
+							{featured.map((product, index) => (
+								<Grid item key={product.id} key={index} sm={3} xs={6}>
+									<ProductCard product={product} />
+								</Grid>
+							))}
 						</Grid>
 					</React.Fragment>
-				}
+				)}
 				<Typography className={classes.categoryTitle}>{activeFilter ? 'Results' : 'Recent'}</Typography>
-				<Grid
-					container
-					spacing={1}
-				>
+				<Grid container spacing={1}>
 					<InfiniteScroll
 						dataLength={filteredResults.length}
 						hasMore
 						next={fetchMoreData}
 						style={{ minWidth: '1000px', display: 'flex', flexWrap: 'wrap' }}
 					>
-
-						{filteredResults.map(
-							(product) =>
-								<Grid
-									item
-									key={product.id}
-									sm={3}
-									xs={6}
-								>
-									<ProductCard product={product} />
-								</Grid>
-						)}
+						{searchResults.map((product) => (
+							<Grid item key={product.id} sm={3} xs={6}>
+								<ProductCard product={product} />
+							</Grid>
+						))}
 					</InfiniteScroll>
 				</Grid>
 			</div>
@@ -124,7 +99,7 @@ const mapStateToProps = (state) => {
 	return {
 		data: state.data,
 		activeFilter: state.activeFilter,
-		searchData: state.searchData,
+		searchData: state.searchData
 	};
 };
 

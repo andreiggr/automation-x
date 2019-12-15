@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/styles';
 import { Typography, Button, Grid } from '@material-ui/core';
 import { ProductsToolbar } from '../ProductList/components';
@@ -45,53 +45,61 @@ const useStyles = makeStyles((theme) => ({
 
 const Product = ({ selectedProduct }) => {
 	const classes = useStyles();
+
+	const [ flag, setFlag ] = useState(false);
+
+	const onStartApp = () => {
+		setFlag(true);
+		const iframe = document.querySelector('iframe');
+		iframe.contentWindow.postMessage('requestSession', '*');
+		onEndSession();
+	};
+
+	const onEndSession = () => {
+		setTimeout(() => {
+			setFlag(false);
+		}, 10000);
+	};
+
 	return (
 		<div className={classes.root}>
-			<div className={classes.content}>
-				<Grid
-					container
-					direction="row"
-					spacing={3}
-					xs={12}
-				>
-					<Grid
-						container
-						direction="column"
-						xs={7}
-					>
-						<div className={classes.contentBar}>
-							<Link
-								className={classes.backButton}
-								to="/products"
-							>
-								<ArrowBackIosIcon fontSize="small" />
-								<Typography className={classes.categoryTitle}>Go back</Typography>
-							</Link>
-							<Button
-								color="primary"
-								variant="contained"
-							>
-								Run on Emulator
-							</Button>
-						</div>
-						<GitCard git={selectedProduct.linkRepo} />
-						<ContentCard git={selectedProduct.linkRepo} />
-					</Grid>
-					<Grid
-						alignContent="center"
-						container
-						direction="column"
-						xs={5}
-					>
-						<div style={{}}>
-							<img
-								src={phoneImg}
-								style={{ maxHeight: '900px' }}
+			<Grid xs={12}>
+				<Grid container direction="column" xs={6}>
+					<div className={classes.contentBar}>
+						<Link className={classes.backButton} to="/products">
+							<ArrowBackIosIcon fontSize="small" />
+							<Typography className={classes.categoryTitle}>Go back</Typography>
+						</Link>
+						<Button onClick={onStartApp} color="primary" variant="contained">
+							Run on Emulator
+						</Button>
+					</div>
+					<GitCard git={selectedProduct.linkRepo} />
+					<ContentCard git={selectedProduct.linkRepo} />
+				</Grid>
+				<Grid container direction="column" xs={5}>
+					{flag && (
+						<iframe
+							src="https://appetize.io/embed/zj3d2tfftfhjnv1f118yqq68cr?device=android&orientation=portrait&scale=65&xdocMsg=true&deviceColor=white&debug=false&screenOnly=false"
+							width="300px"
+							height="650px"
+							frameborder="0"
+							scrolling="no"
+						/>
+					)}
+					{!flag && (
+						<div onClick={onStartApp}>
+							<iframe
+								src="https://appetize.io/embed/zj3d2tfftfhjnv1f118yqq68cr?device=android&orientation=portrait&scale=65&xdocMsg=true&deviceColor=white&debug=true&screenOnly=false"
+								width="300px"
+								height="650px"
+								frameborder="0"
+								scrolling="no"
 							/>
 						</div>
-					</Grid>
+					)}
 				</Grid>
-			</div>
+			</Grid>
 		</div>
 	);
 };
