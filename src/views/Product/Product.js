@@ -9,26 +9,17 @@ import PropTypes from 'prop-types';
 import { fetchData, selectProduct } from 'actions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-const phoneImg = require('../../assets/phone.png');
+import AppFrame from './AppFrame/AppFrame';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		padding: theme.spacing(3)
+		padding: theme.spacing(3),
+		display: 'flex',
 	},
 	categoryTitle: {
 		fontSize: 22,
 		marginBottom: 29,
 		marginTop: 29
-	},
-	content: {
-		marginTop: theme.spacing(2)
-	},
-	pagination: {
-		marginTop: theme.spacing(3),
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'flex-end'
 	},
 	backButton: {
 		cursor: 'pointer',
@@ -43,64 +34,67 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
+const src = 'https://appetize.io/embed/zj3d2tfftfhjnv1f118yqq68cr?device=android&orientation=portrait&scale=65&xdocMsg=true&deviceColor=white&debug=false&screenOnly=false&autoplay=true'
+
 const Product = ({ selectedProduct }) => {
+
 	const classes = useStyles();
 
-	const [ flag, setFlag ] = useState(false);
+	const [run, setRun] = useState(false);
 
 	const onStartApp = () => {
-		setFlag(true);
-		const iframe = document.querySelector('iframe');
-		iframe.contentWindow.postMessage('requestSession', '*');
+		setRun(true);
 		onEndSession();
 	};
 
 	const onEndSession = () => {
 		setTimeout(() => {
-			setFlag(false);
-		}, 10000);
+			setRun(false);
+		}, 30000);
 	};
 
 	return (
-		<div className={classes.root}>
-			<Grid xs={12}>
-				<Grid container direction="column" xs={6}>
-					<div className={classes.contentBar}>
-						<Link className={classes.backButton} to="/products">
-							<ArrowBackIosIcon fontSize="small" />
-							<Typography className={classes.categoryTitle}>Go back</Typography>
-						</Link>
-						<Button onClick={onStartApp} color="primary" variant="contained">
-							Run on Emulator
+		<Grid
+			className={classes.root}
+			container
+			direction="row"
+		>
+			<Grid
+				direction="column"
+				item
+			>
+				<div className={classes.contentBar}>
+					<Link
+						className={classes.backButton}
+						to="/products"
+					>
+						<ArrowBackIosIcon fontSize="small" />
+						<Typography className={classes.categoryTitle}>Go back</Typography>
+					</Link>
+					<Button
+						color="primary"
+						onClick={onStartApp}
+						variant="contained"
+					>
+						Run on Emulator
 						</Button>
-					</div>
-					<GitCard git={selectedProduct.linkRepo} />
-					<ContentCard git={selectedProduct.linkRepo} />
-				</Grid>
-				<Grid container direction="column" xs={5}>
-					{flag && (
-						<iframe
-							src="https://appetize.io/embed/zj3d2tfftfhjnv1f118yqq68cr?device=android&orientation=portrait&scale=65&xdocMsg=true&deviceColor=white&debug=false&screenOnly=false"
-							width="300px"
-							height="650px"
-							frameborder="0"
-							scrolling="no"
-						/>
-					)}
-					{!flag && (
-						<div onClick={onStartApp}>
-							<iframe
-								src="https://appetize.io/embed/zj3d2tfftfhjnv1f118yqq68cr?device=android&orientation=portrait&scale=65&xdocMsg=true&deviceColor=white&debug=true&screenOnly=false"
-								width="300px"
-								height="650px"
-								frameborder="0"
-								scrolling="no"
-							/>
-						</div>
-					)}
-				</Grid>
+				</div>
+				<GitCard git={selectedProduct.linkRepo} />
+				<ContentCard
+					git={selectedProduct.linkRepo}
+					title={selectedProduct.title}
+				/>
 			</Grid>
-		</div>
+			<Grid
+				direction="column"
+				item
+			>
+				<AppFrame
+					runApp={run}
+					src={src}
+				/>
+			</Grid>
+		</Grid>
 	);
 };
 

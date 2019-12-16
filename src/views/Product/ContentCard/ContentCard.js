@@ -7,6 +7,7 @@ import MarkdownGithub from 'react-markdown-github';
 import { Card, CardContent, Typography } from '@material-ui/core';
 import Axios from 'axios';
 import { Image, ImageOrLink } from './Image';
+import selectedProduct from 'reducers/selectedProduct';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -25,14 +26,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ContentCard = (props) => {
-	const { className, ...rest } = props;
+
+
+	const { className, git, title, ...rest } = props;
 
 	const classes = useStyles();
 
-	const [ markdown, setMarkdown ] = useState('');
+	const [markdown, setMarkdown] = useState('');
 
-	const gitURL = props.git;
-	const rawGit = gitURL.split('github').join('raw.githubusercontent') + '/master';
+	const rawGit = git.split('github').join('raw.githubusercontent') + '/master';
 	const rawReadme = rawGit + '/README.md';
 
 	useEffect(() => {
@@ -42,21 +44,19 @@ const ContentCard = (props) => {
 	const transformImageUri = (input) => (/^https?:/.test(input) ? input : `${rawGit}/${input}`);
 
 	return (
-		<Card {...rest} className={clsx(classes.root, className)}>
+		<Card
+			{...rest}
+			className={clsx(classes.root, className)}
+		>
 			<CardContent>
-				<Typography align="left" variant="h3">
-					Flutter Layout Grid
+				<Typography
+					align="center"
+					variant="h2"
+
+				>
+					{title}
 				</Typography>
 				<div className={classes.content}>
-					{/* <ReactMarkdown
-                        className={classes.markdown}
-                        renderers={{ image: Image }}
-                        skipHtml={true}
-                        source={markdown}
-                        transformImageUri={(uri) => transformImageUri(uri)}
-                        transformLinkUri={(src) => transformImageUri(src)}
-                    /> */}
-
 					<MarkdownGithub
 						className={classes.markdown}
 						renderers={{ image: Image }}
