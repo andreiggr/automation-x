@@ -14,7 +14,7 @@ import AppFrame from './AppFrame/AppFrame';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		padding: theme.spacing(3),
-		display: 'flex',
+		display: 'flex'
 	},
 	categoryTitle: {
 		fontSize: 22,
@@ -34,13 +34,14 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const src = 'https://appetize.io/embed/zj3d2tfftfhjnv1f118yqq68cr?device=android&orientation=portrait&scale=65&xdocMsg=true&deviceColor=white&debug=false&screenOnly=false&autoplay=true'
+const src =
+	'https://appetize.io/embed/zj3d2tfftfhjnv1f118yqq68cr?device=android&orientation=portrait&scale=65&xdocMsg=true&deviceColor=white&debug=false&screenOnly=false&autoplay=true';
 
 const Product = ({ selectedProduct }) => {
-
 	const classes = useStyles();
 
-	const [run, setRun] = useState(false);
+	const [ run, setRun ] = useState(false);
+	const [ expired, setExpired ] = useState(false);
 
 	const onStartApp = () => {
 		setRun(true);
@@ -50,49 +51,27 @@ const Product = ({ selectedProduct }) => {
 	const onEndSession = () => {
 		setTimeout(() => {
 			setRun(false);
+			setExpired(true);
 		}, 30000);
 	};
 
 	return (
-		<Grid
-			className={classes.root}
-			container
-			direction="row"
-		>
-			<Grid
-				direction="column"
-				item
-			>
+		<Grid className={classes.root} container direction="row">
+			<Grid direction="column" item>
 				<div className={classes.contentBar}>
-					<Link
-						className={classes.backButton}
-						to="/products"
-					>
+					<Link className={classes.backButton} to="/products">
 						<ArrowBackIosIcon fontSize="small" />
 						<Typography className={classes.categoryTitle}>Go back</Typography>
 					</Link>
-					<Button
-						color="primary"
-						onClick={onStartApp}
-						variant="contained"
-					>
+					<Button color="primary" onClick={onStartApp} variant="contained">
 						Run on Emulator
-						</Button>
+					</Button>
 				</div>
 				<GitCard git={selectedProduct.linkRepo} />
-				<ContentCard
-					git={selectedProduct.linkRepo}
-					title={selectedProduct.title}
-				/>
+				<ContentCard git={selectedProduct.linkRepo} title={selectedProduct.title} />
 			</Grid>
-			<Grid
-				direction="column"
-				item
-			>
-				<AppFrame
-					runApp={run}
-					src={src}
-				/>
+			<Grid direction="column" item>
+				<AppFrame runApp={run} expired={expired} src={src} />
 			</Grid>
 		</Grid>
 	);
