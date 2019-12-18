@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
 	content: {
 		marginTop: theme.spacing(2)
 	},
+	product: {
+		maxHeight: '400px'
+	},
 	pagination: {
 		marginTop: theme.spacing(3),
 		display: 'flex',
@@ -30,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductList = ({ fetchData, data, activeFilter, searchData }) => {
 	const [ dataLimit, setDataLimit ] = useState(12);
+	const classes = useStyles();
 
 	useEffect(
 		() => {
@@ -43,8 +47,6 @@ const ProductList = ({ fetchData, data, activeFilter, searchData }) => {
 			setDataLimit(dataLimit + 8);
 		}, 300);
 	};
-
-	const classes = useStyles();
 
 	const filterData = () => {
 		let filtered = data.filter((product) => {
@@ -63,33 +65,36 @@ const ProductList = ({ fetchData, data, activeFilter, searchData }) => {
 		<div className={classes.root}>
 			<ProductsToolbar />
 			<div className={classes.content}>
-				{!activeFilter && (
+				{!activeFilter &&
+				!searchData && (
 					<React.Fragment>
 						<Typography className={classes.categoryTitle}>Featured Flutter Projects</Typography>
-						<Grid container spacing={1}>
+						<Grid container spacing={1} p={5}>
 							{featured.map((product, index) => (
-								<Grid item key={product.id} key={index} sm={3} xs={6}>
+								<Grid className={classes.product} item key={product.id} sm={3} xs={6}>
 									<ProductCard product={product} />
 								</Grid>
 							))}
 						</Grid>
 					</React.Fragment>
 				)}
-				<Typography className={classes.categoryTitle}>{activeFilter ? 'Results' : 'Recent'}</Typography>
-				<Grid container spacing={1}>
-					<InfiniteScroll
-						dataLength={filteredResults.length}
-						hasMore
-						next={fetchMoreData}
-						style={{ minWidth: '1000px', display: 'flex', flexWrap: 'wrap' }}
-					>
+				<Typography className={classes.categoryTitle}>
+					{!activeFilter && !searchData ? 'Recent' : 'Results'}
+				</Typography>
+				<InfiniteScroll
+					dataLength={filteredResults.length}
+					hasMore
+					next={fetchMoreData}
+					style={{ minWidth: '1000px', display: 'flex', flexWrap: 'wrap', padding: '2px' }}
+				>
+					<Grid container spacing={1}>
 						{searchResults.map((product) => (
 							<Grid item key={product.id} sm={3} xs={6}>
 								<ProductCard product={product} />
 							</Grid>
 						))}
-					</InfiniteScroll>
-				</Grid>
+					</Grid>
+				</InfiniteScroll>
 			</div>
 		</div>
 	);

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, CardActions, Typography, Grid, Divider } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import CallSplitIcon from '@material-ui/icons/CallSplit';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -12,11 +13,14 @@ import data from 'views/Dashboard/components/LatestOrders/data';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		maxWidth: '350px'
+		maxWidth: '350px',
+		'&:hover': {
+			boxShadow: '0px 0px 2px 1px #3F51B5'
+		}
 	},
 	imageContainer: {
-		height: 250,
-		width: 250,
+		height: 200,
+		width: 200,
 		margin: '0 auto',
 		borderRadius: '5px',
 		overflow: 'hidden',
@@ -29,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 	image: {
 		width: '100%'
 	},
+
 	statsItem: {
 		display: 'flex',
 		alignItems: 'center'
@@ -36,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
 	statsIcon: {
 		color: theme.palette.icon,
 		marginRight: theme.spacing(1)
+	},
+	title: {
+		minHeight: '50px'
 	}
 }));
 
@@ -46,6 +54,8 @@ const ProductCard = (props) => {
 
 	const productRoute = `/product/${product.id}`;
 
+	var title = product.title.length < 45 ? product.title : product.title.substring(0, 45) + '..';
+
 	return (
 		<Card {...rest} className={clsx(classes.root, className)}>
 			<CardContent>
@@ -53,13 +63,12 @@ const ProductCard = (props) => {
 					<img alt="Product" className={classes.image} src={product.imageUrl} />
 				</Link>
 				<Link to={productRoute} onClick={() => selectProduct(product)}>
-					<Typography align="center" gutterBottom style={{ cursor: 'pointer' }} variant="h4">
-						{product.title}
-					</Typography>
+					<div className={classes.title}>
+						<Typography align="center" variant="h4">
+							{title}
+						</Typography>
+					</div>
 				</Link>
-				{/* <Typography align="center" variant="body1">
-					{product.description}
-				</Typography> */}
 			</CardContent>
 			<Divider />
 			<CardActions>
@@ -67,13 +76,13 @@ const ProductCard = (props) => {
 					<Grid className={classes.statsItem} item>
 						<AccessTimeIcon className={classes.statsIcon} />
 						<Typography display="inline" variant="body2">
-							Updated 2hr ago
+							{product.date.toLowerCase()}
 						</Typography>
 					</Grid>
 					<Grid className={classes.statsItem} item>
-						<GetAppIcon className={classes.statsIcon} />
+						<CallSplitIcon className={classes.statsIcon} />
 						<Typography display="inline" variant="body2">
-							{product.totalDownloads} Downloads
+							{product.forksRepo} Forks
 						</Typography>
 					</Grid>
 				</Grid>
@@ -87,9 +96,7 @@ ProductCard.propTypes = {
 	product: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => {
-	return {
-		selectedProduct: state.selectedProduct
-	};
+	return {};
 };
 
 const mapDispatchToProps = (dispatch) => {

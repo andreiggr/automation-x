@@ -68,7 +68,7 @@ const Product = ({ selectedProduct }) => {
 					</Button>
 				</div>
 				<GitCard git={selectedProduct.linkRepo} />
-				<ContentCard git={selectedProduct.linkRepo} title={selectedProduct.title} />
+				<ContentCard />
 			</Grid>
 			<Grid direction="column" item>
 				<AppFrame runApp={run} expired={expired} src={src} />
@@ -83,6 +83,7 @@ Product.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
+		data: state.data,
 		selectedProduct: state.selectedProduct
 	};
 };

@@ -8,6 +8,7 @@ import { Card, CardContent, Typography } from '@material-ui/core';
 import Axios from 'axios';
 import { Image, ImageOrLink } from './Image';
 import selectedProduct from 'reducers/selectedProduct';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -26,16 +27,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ContentCard = (props) => {
-
-
-	const { className, git, title, ...rest } = props;
+	const { className, selectedProduct, ...rest } = props;
 
 	const classes = useStyles();
 
-	const [markdown, setMarkdown] = useState('');
+	const [ markdown, setMarkdown ] = useState('');
 
-	const rawGit = git.split('github').join('raw.githubusercontent') + '/master';
-	const rawReadme = rawGit + '/README.md';
+	const { rawGit, rawReadme, title } = selectedProduct;
 
 	useEffect(() => {
 		Axios.get(rawReadme).then((res) => setMarkdown(res.data));
@@ -44,16 +42,9 @@ const ContentCard = (props) => {
 	const transformImageUri = (input) => (/^https?:/.test(input) ? input : `${rawGit}/${input}`);
 
 	return (
-		<Card
-			{...rest}
-			className={clsx(classes.root, className)}
-		>
+		<Card {...rest} className={clsx(classes.root, className)}>
 			<CardContent>
-				<Typography
-					align="center"
-					variant="h2"
-
-				>
+				<Typography align="center" variant="h2">
 					{title}
 				</Typography>
 				<div className={classes.content}>
@@ -76,4 +67,16 @@ ContentCard.propTypes = {
 	git: PropTypes.string
 };
 
-export default ContentCard;
+const mapStateToProps = (state) => {
+	return {
+		selectedProduct: state.selectedProduct
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		//selectProduct: (product) => dispatch(selectProduct(product))
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContentCard);
