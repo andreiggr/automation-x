@@ -12,8 +12,13 @@ const useStyles = makeStyles((theme) => ({
 		paddingLeft: '50px',
 		position: 'relative'
 	},
+	phoneContent: {
+		position: 'relative'
+	},
 	countdown: {
-		position: 'absolute'
+		position: 'absolute',
+		bottom: '12px',
+		left: '104px'
 	},
 	runCard: {
 		display: 'flex',
@@ -23,34 +28,21 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const renderTime = (value) => {
-	if (value === 0) {
-		return <div className="timer">Too late...</div>;
-	}
-
-	return (
-		<div className="timer">
-			<div className="text">Remaining</div>
-			<div className="value">{value}</div>
-			<div className="text">seconds</div>
-		</div>
-	);
-};
-
 const AppFrame = ({ src, runApp, expired }) => {
 	const classes = useStyles();
 	return (
 		<div className={classes.appFrame}>
 			{runApp && (
-				<div style={{ position: 'relative' }}>
+				<div className={classes.phoneContent}>
 					<iframe frameBorder="0" height="520px" scrolling="no" src={src} width="300px" />
-					<CountdownCircleTimer
-						isPlaying
-						durationSeconds={30}
-						colors={[ [ '#004777', 0.33 ], [ '#F7B801', 0.33 ], [ '#A30000' ] ]}
-						size={50}
-						className={classes.countdown}
-					/>
+					<div className={classes.countdown}>
+						<CountdownCircleTimer
+							isPlaying
+							durationSeconds={40}
+							colors={[ [ '#004777', 0.33 ], [ '#F7B801', 0.33 ], [ '#A30000' ] ]}
+							size={50}
+						/>
+					</div>
 				</div>
 			)}
 			{!runApp &&

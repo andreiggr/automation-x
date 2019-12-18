@@ -52,7 +52,7 @@ const Product = ({ selectedProduct }) => {
 		setTimeout(() => {
 			setRun(false);
 			setExpired(true);
-		}, 30000);
+		}, 40000);
 	};
 
 	return (
@@ -63,7 +63,7 @@ const Product = ({ selectedProduct }) => {
 						<ArrowBackIosIcon fontSize="small" />
 						<Typography className={classes.categoryTitle}>Go back</Typography>
 					</Link>
-					<Button color="primary" onClick={onStartApp} variant="contained">
+					<Button disabled={expired} color="primary" onClick={onStartApp} variant="contained">
 						Run on Emulator
 					</Button>
 				</div>
