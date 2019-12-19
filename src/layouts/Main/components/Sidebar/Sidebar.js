@@ -50,11 +50,11 @@ const Sidebar = props => {
       href: '/products',
       icon: <AirplayIcon />
     },
-    {
-      title: 'Upload App',
-      href: '/upload',
-      icon: <CloudUploadIcon />
-    },
+    // {
+    //   title: 'Upload App',
+    //   href: '/upload',
+    //   icon: <CloudUploadIcon />
+    // },
     // {
     //   title: 'Authentication',
     //   href: '/sign-in',
@@ -75,11 +75,11 @@ const Sidebar = props => {
     //   href: '/account',
     //   icon: <AccountBoxIcon />
     // },
-    {
-      title: 'Settings',
-      href: '/settings',
-      icon: <SettingsIcon />
-    }
+    // {
+    //   title: 'Settings',
+    //   href: '/settings',
+    //   icon: <SettingsIcon />
+    // }
   ];
 
   return (
@@ -94,8 +94,8 @@ const Sidebar = props => {
         {...rest}
         className={clsx(classes.root, className)}
       >
-        <Profile />
-        <Divider className={classes.divider} />
+        {/* <Profile />
+        <Divider className={classes.divider} /> */}
         <SidebarNav
           className={classes.nav}
           pages={pages}
