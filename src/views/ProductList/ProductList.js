@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, CircularProgress } from '@material-ui/core';
 import { ProductsToolbar, ProductCard } from './components';
-import { fetchData } from 'actions';
+import { fetchData, setActiveFilter } from 'actions';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router';
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	categoryTitle: {
 		fontSize: 22,
-		marginBottom: 29,
+		marginBottom: 20,
 		marginTop: 29
 	},
 	content: {
@@ -28,10 +28,20 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'flex-end'
+	},
+	loader: {
+		position: 'fixed',
+		bottom: '10px',
+		right: '5px'
+	},
+	filter: {
+		//cursor: 'pointer',
+		fontWeight: 'bold',
+		width: '30px'
 	}
 }));
 
-const ProductList = ({ fetchData, data, activeFilter, searchData }) => {
+const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchData }) => {
 	const [dataLimit, setDataLimit] = useState(12);
 	const classes = useStyles();
 
@@ -47,6 +57,10 @@ const ProductList = ({ fetchData, data, activeFilter, searchData }) => {
 			setDataLimit(dataLimit + 8);
 		}, 300);
 	};
+
+	const clearFilters = () => {
+		setActiveFilter('')
+	}
 
 	const filterData = () => {
 		let filtered = data.filter((product) => {
@@ -89,33 +103,40 @@ const ProductList = ({ fetchData, data, activeFilter, searchData }) => {
 						</React.Fragment>
 					)}
 				<Typography className={classes.categoryTitle}>
-					{!activeFilter && !searchData ? 'Recent' : 'Results'}
+					{!activeFilter && !searchData ? 'Recent' : `Results found: ${searchResults.length}`}
 				</Typography>
-				<div>
-					<InfiniteScroll
-						dataLength={filteredResults.length}
-						hasMore
-						next={fetchMoreData}
-						style={{ display: 'flex', overflow: 'hidden', padding: '2px' }}
+				{activeFilter &&
+					<Typography
+						className={classes.filter}
+						color="primary"
+					//onClick={() => clearFilters()}
 					>
-						<Grid
-							container
-							spacing={1}
-						>
-							{searchResults.map((product) => (
-								<Grid
-									item
-									key={product.id}
-									sm={3}
-									xs={6}
-								>
-									<ProductCard product={product} />
-								</Grid>
-							))}
-						</Grid>
-					</InfiniteScroll>
+						{activeFilter}
+					</Typography>
+				}
+				<InfiniteScroll
+					dataLength={filteredResults.length}
+					hasMore
+					next={fetchMoreData}
+					style={{ overflow: 'hidden', padding: '2px' }}
+				>
+					<Grid
+						container
+						spacing={1}
+					>
+						{searchResults.map((product) => (
+							<Grid
+								item
+								key={product.id}
+								sm={3}
+								xs={6}
+							>
+								<ProductCard product={product} />
+							</Grid>
+						))}
 
-				</div>
+					</Grid>
+				</InfiniteScroll>
 			</div>
 		</div>
 	);
@@ -131,7 +152,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		fetchData: () => dispatch(fetchData())
+		fetchData: () => dispatch(fetchData()),
+		setActiveFilter: () => dispatch(setActiveFilter('')),
 	};
 };
 

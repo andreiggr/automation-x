@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductsToolbar = (props) => {
-	const { className, setActiveFilter, setSearchData, searchData, ...rest } = props;
+	const { className, setActiveFilter, setSearchData, searchData, activeFilter, ...rest } = props
 
 	const [uiFilter, setUiFilter] = useState('');
 	const [mediaFilter, setMediaFilter] = useState('');
