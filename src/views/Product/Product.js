@@ -40,8 +40,8 @@ const src =
 const Product = ({ selectedProduct }) => {
 	const classes = useStyles();
 
-	const [ run, setRun ] = useState(false);
-	const [ expired, setExpired ] = useState(false);
+	const [run, setRun] = useState(false);
+	const [expired, setExpired] = useState(false);
 
 	const onStartApp = () => {
 		setRun(true);
@@ -56,29 +56,50 @@ const Product = ({ selectedProduct }) => {
 	};
 
 	return (
-		<Grid className={classes.root} container direction="row">
-			<Grid direction="column" item>
+		<Grid
+			className={classes.root}
+			container
+			direction="row"
+		>
+			<Grid
+				direction="column"
+				item
+			>
 				<div className={classes.contentBar}>
-					<Link className={classes.backButton} to="/products">
+					<Link
+						className={classes.backButton}
+						to="/products"
+					>
 						<ArrowBackIosIcon fontSize="small" />
 						<Typography className={classes.categoryTitle}>Go back</Typography>
 					</Link>
-					<Button disabled={expired} color="primary" onClick={onStartApp} variant="contained">
+					<Button
+						color="primary"
+						disabled={expired}
+						onClick={onStartApp}
+						variant="contained"
+					>
 						Run on Emulator
 					</Button>
 				</div>
 				<GitCard git={selectedProduct.linkRepo} />
 				<ContentCard />
 			</Grid>
-			<Grid direction="column" item>
-				<AppFrame runApp={run} expired={expired} src={src} />
+			<Grid
+				direction="column"
+				item
+			>
+				<AppFrame
+					expired={expired}
+					runApp={run}
+					src={src}
+				/>
 			</Grid>
 		</Grid>
 	);
 };
 
 Product.propTypes = {
-	classes: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => {

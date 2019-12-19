@@ -24,7 +24,12 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
-		padding: '20px'
+		padding: '20px',
+		minHeight: '150px'
+	},
+	icon: {
+		marginBottom: '30px',
+		fontSize: '50px'
 	}
 }));
 
@@ -34,39 +39,67 @@ const AppFrame = ({ src, runApp, expired }) => {
 		<div className={classes.appFrame}>
 			{runApp && (
 				<div className={classes.phoneContent}>
-					<iframe frameBorder="0" height="520px" scrolling="no" src={src} width="300px" />
+					<iframe
+						frameBorder="0"
+						height="520px"
+						scrolling="no"
+						src={src}
+						width="300px"
+					/>
 					<div className={classes.countdown}>
 						<CountdownCircleTimer
-							isPlaying
+							colors={[['#004777', 0.33], ['#F7B801', 0.33], ['#A30000']]}
 							durationSeconds={40}
-							colors={[ [ '#004777', 0.33 ], [ '#F7B801', 0.33 ], [ '#A30000' ] ]}
+							isPlaying
 							size={50}
 						/>
 					</div>
 				</div>
 			)}
 			{!runApp &&
-			!expired && (
-				<div>
-					<Card>
-						<CardContent>
-							<Grid direction="column" className={classes.runCard}>
-								<InfoIcon fontSize="large" color="action" />
-								<Typography align="center" variant="h4">
-									Press Run to Start
+				!expired && (
+					<div>
+						<Card>
+							<CardContent>
+								<Grid
+									className={classes.runCard}
+									direction="column"
+								>
+									<InfoIcon
+										className={classes.icon}
+										color="action"
+										fontSize="large"
+									/>
+									<Typography
+										align="center"
+										color="textSecondary"
+										variant="h4"
+									>
+										Press Run to Start
 								</Typography>
-							</Grid>
-						</CardContent>
-					</Card>
-				</div>
-			)}
+								</Grid>
+							</CardContent>
+						</Card>
+					</div>
+				)}
 			{expired && (
 				<div>
 					<Card>
 						<CardContent>
-							<Grid direction="column" className={classes.runCard}>
-								<TimerOffIcon fontSize="large" color="action" />
-								<Typography align="center" variant="h4">
+							<Grid
+								className={classes.runCard}
+								direction="column"
+							>
+								<TimerOffIcon
+									className={classes.icon}
+									color="action"
+									fontSize="large"
+								/>
+								<Typography
+									align="center"
+									color="textSecondary"
+									variant="h4"
+								>
 									Your time has expired
 								</Typography>
 							</Grid>

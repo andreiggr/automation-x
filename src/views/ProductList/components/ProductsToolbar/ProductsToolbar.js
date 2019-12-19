@@ -49,20 +49,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductsToolbar = (props) => {
-	const { className, setActiveFilter, setSearchData, ...rest } = props;
+	const { className, setActiveFilter, setSearchData, searchData, ...rest } = props;
 
-	const [ uiFilter, setUiFilter ] = useState('');
-	const [ mediaFilter, setMediaFilter ] = useState('');
-	const [ componentsFilter, setComponentsFilter ] = useState('');
-	const [ appFilter, setAppFilter ] = useState('');
-	const [ elementsFilter, setElementsFilter ] = useState('');
-	const [ menuFilter, setMenuFilter ] = useState('');
-	const [ inputFilter, setInputFilter ] = useState('');
+	const [uiFilter, setUiFilter] = useState('');
+	const [mediaFilter, setMediaFilter] = useState('');
+	const [componentsFilter, setComponentsFilter] = useState('');
+	const [appFilter, setAppFilter] = useState('');
+	const [elementsFilter, setElementsFilter] = useState('');
+	const [menuFilter, setMenuFilter] = useState('');
+	const [inputFilter, setInputFilter] = useState('');
 
 	const classes = useStyles();
 
 	const onSearch = (data) => {
 		const searchData = data.toLowerCase();
+		resetFilters();
 		setSearchData(searchData);
 	};
 
@@ -74,10 +75,14 @@ const ProductsToolbar = (props) => {
 		setElementsFilter('');
 		setMenuFilter('');
 		setInputFilter('');
+		setActiveFilter('');
 	};
 
 	return (
-		<div {...rest} className={clsx(classes.root, className)}>
+		<div
+			{...rest}
+			className={clsx(classes.root, className)}
+		>
 			<div className={classes.row}>
 				<FormControl className={classes.formControl}>
 					<InputLabel id="UI">UI</InputLabel>
@@ -85,13 +90,17 @@ const ProductsToolbar = (props) => {
 						labelId="UI"
 						onChange={(event) => {
 							resetFilters();
+							setSearchData('');
 							setActiveFilter(event.target.value);
 							setUiFilter(event.target.value);
 						}}
 						value={uiFilter}
 					>
 						{uiFilters.map((item, i) => (
-							<MenuItem index={i} value={item}>
+							<MenuItem
+								index={i}
+								value={item}
+							>
 								{item}
 							</MenuItem>
 						))}
@@ -103,13 +112,17 @@ const ProductsToolbar = (props) => {
 						labelId="media"
 						onChange={(event) => {
 							resetFilters();
+							setSearchData('');
 							setActiveFilter(event.target.value);
 							setMediaFilter(event.target.value);
 						}}
 						value={mediaFilter}
 					>
 						{mediaFilters.map((item, i) => (
-							<MenuItem index={i} value={item}>
+							<MenuItem
+								index={i}
+								value={item}
+							>
 								{item}
 							</MenuItem>
 						))}
@@ -121,13 +134,17 @@ const ProductsToolbar = (props) => {
 						labelId="el"
 						onChange={(event) => {
 							resetFilters();
+							setSearchData('');
 							setActiveFilter(event.target.value);
 							setElementsFilter(event.target.value);
 						}}
 						value={elementsFilter}
 					>
 						{elementsFilters.map((item, i) => (
-							<MenuItem index={i} value={item}>
+							<MenuItem
+								index={i}
+								value={item}
+							>
 								{item}
 							</MenuItem>
 						))}
@@ -139,13 +156,17 @@ const ProductsToolbar = (props) => {
 						labelId="input"
 						onChange={(event) => {
 							resetFilters();
+							setSearchData('');
 							setActiveFilter(event.target.value);
 							setInputFilter(event.target.value);
 						}}
 						value={inputFilter}
 					>
 						{inputFilters.map((item, i) => (
-							<MenuItem index={i} value={item}>
+							<MenuItem
+								index={i}
+								value={item}
+							>
 								{item}
 							</MenuItem>
 						))}
@@ -157,13 +178,17 @@ const ProductsToolbar = (props) => {
 						labelId="menu"
 						onChange={(event) => {
 							resetFilters();
+							setSearchData('');
 							setActiveFilter(event.target.value);
 							setMenuFilter(event.target.value);
 						}}
 						value={menuFilter}
 					>
 						{menuFilters.map((item, i) => (
-							<MenuItem index={i} value={item}>
+							<MenuItem
+								index={i}
+								value={item}
+							>
 								{item}
 							</MenuItem>
 						))}
@@ -175,13 +200,17 @@ const ProductsToolbar = (props) => {
 						labelId="COMP"
 						onChange={(event) => {
 							resetFilters();
+							setSearchData('');
 							setActiveFilter(event.target.value);
 							setComponentsFilter(event.target.value);
 						}}
 						value={componentsFilter}
 					>
 						{componentsFilters.map((item, i) => (
-							<MenuItem index={i} value={item}>
+							<MenuItem
+								index={i}
+								value={item}
+							>
 								{item}
 							</MenuItem>
 						))}
@@ -193,13 +222,17 @@ const ProductsToolbar = (props) => {
 						labelId="APPS"
 						onChange={(event) => {
 							resetFilters();
+							setSearchData('');
 							setActiveFilter(event.target.value);
 							setAppFilter(event.target.value);
 						}}
 						value={appFilter}
 					>
 						{appsFilters.map((item, i) => (
-							<MenuItem index={i} value={item}>
+							<MenuItem
+								index={i}
+								value={item}
+							>
 								{item}
 							</MenuItem>
 						))}
@@ -210,9 +243,13 @@ const ProductsToolbar = (props) => {
 					className={classes.searchInput}
 					onChange={(event) => onSearch(event.target.value)}
 					placeholder="Search product"
+					value={searchData}
 				/>
 				<Link to="/upload">
-					<Button color="primary" variant="contained">
+					<Button
+						color="primary"
+						variant="contained"
+					>
 						Add product
 					</Button>
 				</Link>

@@ -36,21 +36,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GitCard = (props) => {
-	const { className, ...rest } = props;
+	const { className, git, ...rest } = props;
 
 	const classes = useStyles();
 
 	return (
-		<Card {...rest} className={clsx(classes.root, className)}>
+		<Card
+			{...rest}
+			className={clsx(classes.root, className)}
+		>
 			<CardContent>
-				<Typography align="left" variant="h6">
+				<Typography
+					align="left"
+					variant="h6"
+				>
 					GitHub
 				</Typography>
 
 				<div className={classes.row}>
-					<div onClick={() => window.open(props.git, '_blank')} className={classes.gitLink}>
+					<div
+						className={classes.gitLink}
+						onClick={() => window.open(git, '_blank')}
+					>
 						<GitHubIcon className={classes.icon} />
-						<a className={classes.link}>{props.git}</a>
+						<a className={classes.link}>{git}</a>
 					</div>
 					<div>
 						<VisibilityIcon className={classes.icon} />
@@ -64,7 +73,6 @@ const GitCard = (props) => {
 
 GitCard.propTypes = {
 	className: PropTypes.string,
-	product: PropTypes.object.isRequired
 };
 
 export default GitCard;
