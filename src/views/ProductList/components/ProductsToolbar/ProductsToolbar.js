@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 		minWidth: 95
 	},
 	row: {
-		height: '42px',
+		minHeight: '42px',
 		display: 'flex',
 		alignItems: 'center',
 		flexWrap: 'wrap',
