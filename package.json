@@ -66,5 +66,5 @@
     "prettier-eslint": "^8.8.2",
     "prettier-eslint-cli": "^4.7.1",
     "typescript": "^3.5.1"
-  },
+  }
 }
