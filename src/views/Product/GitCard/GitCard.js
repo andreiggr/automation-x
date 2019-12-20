@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GitCard = (props) => {
-	const { className, git, ...rest } = props;
+	const { className, git, watchers, forks, ...rest } = props;
 
 	const classes = useStyles();
 
@@ -61,9 +61,11 @@ const GitCard = (props) => {
 						<GitHubIcon className={classes.icon} />
 						<a className={classes.link}>{git}</a>
 					</div>
-					<div>
+					<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 						<VisibilityIcon className={classes.icon} />
+						<Typography variant="h5">{watchers}</Typography>
 						<CallSplitIcon className={classes.icon} />
+						<Typography variant="h5">{forks}</Typography>
 					</div>
 				</div>
 			</CardContent>

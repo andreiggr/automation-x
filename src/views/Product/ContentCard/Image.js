@@ -3,8 +3,8 @@ import React from 'react';
 export function Image(props) {
     return <img
         {...props}
-        style={{ maxWidth: '100%' }}
-           />
+        style={{ maxWidth: '100%', marginBottom: '30px' }}
+    />
 }
 
 

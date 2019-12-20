@@ -82,7 +82,11 @@ const Product = ({ selectedProduct }) => {
 						Run on Emulator
 					</Button>
 				</div>
-				<GitCard git={selectedProduct.linkRepo} />
+				<GitCard
+					forks={selectedProduct.forksRepo}
+					git={selectedProduct.linkRepo}
+					watchers={selectedProduct.watchersRepo}
+				/>
 				<ContentCard />
 			</Grid>
 			<Grid

@@ -9,6 +9,7 @@ import Axios from 'axios';
 import { Image, ImageOrLink } from './Image';
 import selectedProduct from 'reducers/selectedProduct';
 import { connect } from 'react-redux';
+import CodeBlock from './CodeBlock/CodeBlock';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -19,10 +20,14 @@ const useStyles = makeStyles((theme) => ({
 	content: {
 		marginTop: '12px',
 		display: 'flex',
-		alignItems: 'center'
+		alignItems: 'center',
+		padding: '20px'
 	},
 	markdown: {
-		width: '700px'
+		maxWidth: '700px',
+		display: 'flex',
+		flexDirection: 'column',
+		'& a': { color: 'black', textDecoration: 'underline' }
 	}
 }));
 
@@ -31,27 +36,37 @@ const ContentCard = (props) => {
 
 	const classes = useStyles();
 
-	const [ markdown, setMarkdown ] = useState('');
+	const [markdown, setMarkdown] = useState('');
 
 	const { rawGit, rawReadme, title } = selectedProduct;
 
 	useEffect(() => {
-		Axios.get(rawReadme).then((res) => setMarkdown(res.data));
+		Axios.get(rawReadme).then((res) => setMarkdown(res.data))
 	}, []);
 
 	const transformImageUri = (input) => (/^https?:/.test(input) ? input : `${rawGit}/${input}`);
 
 	return (
-		<Card {...rest} className={clsx(classes.root, className)}>
+		<Card
+			{...rest}
+			className={clsx(classes.root, className)}
+		>
 			<CardContent>
-				<Typography align="center" variant="h2">
+				<Typography
+					align="center"
+					variant="h2"
+				>
 					{title}
 				</Typography>
 				<div className={classes.content}>
 					<MarkdownGithub
 						className={classes.markdown}
-						renderers={{ image: Image }}
-						skipHtml
+						escapeHtml={false}
+						renderers={{
+							image: Image,
+							code: CodeBlock,
+							link: ImageOrLink
+						}}
 						source={markdown}
 						sourceUri={rawReadme}
 						transformImageUri={({ uri }) => transformImageUri(uri)}
