@@ -37,3 +37,11 @@ export const setSearchData = (searchData) => {
 		searchData
 	};
 };
+
+export const resetFilters = () => {
+	setActiveFilter('');
+};
+
+export const resetSearchData = () => {
+	setSearchData('');
+};

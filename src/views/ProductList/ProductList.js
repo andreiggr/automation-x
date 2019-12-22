@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Grid, Typography, CircularProgress } from '@material-ui/core';
+import { Grid, Typography, CircularProgress, Button } from '@material-ui/core';
 import { ProductsToolbar, ProductCard } from './components';
 import { fetchData, setActiveFilter } from 'actions';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -35,21 +36,21 @@ const useStyles = makeStyles((theme) => ({
 		right: '5px'
 	},
 	filter: {
-		//cursor: 'pointer',
+		cursor: 'pointer',
 		fontWeight: 'bold',
 		width: '30px'
 	}
 }));
 
 const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchData }) => {
-	const [dataLimit, setDataLimit] = useState(12);
+	const [ dataLimit, setDataLimit ] = useState(12);
 	const classes = useStyles();
 
 	useEffect(
 		() => {
 			fetchData();
 		},
-		[data]
+		[ data ]
 	);
 
 	const fetchMoreData = () => {
@@ -58,9 +59,9 @@ const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchDat
 		}, 300);
 	};
 
-	const clearFilters = () => {
-		setActiveFilter('')
-	}
+	const onClearFilters = () => {
+		setActiveFilter('');
+	};
 
 	const filterData = () => {
 		let filtered = data.filter((product) => {
@@ -80,61 +81,39 @@ const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchDat
 			<ProductsToolbar />
 			<div className={classes.content}>
 				{!activeFilter &&
-					!searchData && (
-						<React.Fragment>
-							<Typography className={classes.categoryTitle}>Featured Flutter Projects</Typography>
-							<Grid
-								container
-								p={5}
-								spacing={1}
-							>
-								{featured.map((product, index) => (
-									<Grid
-										className={classes.product}
-										item
-										key={product.id}
-										sm={3}
-										xs={6}
-									>
-										<ProductCard product={product} />
-									</Grid>
-								))}
-							</Grid>
-						</React.Fragment>
-					)}
+				!searchData && (
+					<React.Fragment>
+						<Typography className={classes.categoryTitle}>Featured Flutter Projects</Typography>
+						<Grid container p={5} spacing={1}>
+							{featured.map((product, index) => (
+								<Grid className={classes.product} item key={product.id} sm={3} xs={6}>
+									<ProductCard product={product} />
+								</Grid>
+							))}
+						</Grid>
+					</React.Fragment>
+				)}
 				<Typography className={classes.categoryTitle}>
 					{!activeFilter && !searchData ? 'Recent' : `Results found: ${searchResults.length}`}
 				</Typography>
-				{activeFilter &&
-					<Typography
-						className={classes.filter}
-						color="primary"
-					//onClick={() => clearFilters()}
-					>
-						{activeFilter}
-					</Typography>
-				}
+				{activeFilter && (
+					<Button classname={classes.filter} onClick={() => onClearFilters()}>
+						<CloseIcon color="primary" size="small" />
+						<Typography color="primary">{activeFilter}</Typography>
+					</Button>
+				)}
 				<InfiniteScroll
 					dataLength={filteredResults.length}
 					hasMore
 					next={fetchMoreData}
 					style={{ overflow: 'hidden', padding: '2px' }}
 				>
-					<Grid
-						container
-						spacing={1}
-					>
+					<Grid container spacing={1}>
 						{searchResults.map((product) => (
-							<Grid
-								item
-								key={product.id}
-								sm={3}
-								xs={6}
-							>
+							<Grid item key={product.id} sm={3} xs={6}>
 								<ProductCard product={product} />
 							</Grid>
 						))}
-
 					</Grid>
 				</InfiniteScroll>
 			</div>
@@ -153,7 +132,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		fetchData: () => dispatch(fetchData()),
-		setActiveFilter: () => dispatch(setActiveFilter('')),
+		setActiveFilter: (filter) => dispatch(setActiveFilter(filter))
 	};
 };
 
