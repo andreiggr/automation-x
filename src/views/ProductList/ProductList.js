@@ -64,7 +64,8 @@ const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchDat
 	};
 
 	const featured = data.slice(0, 4);
-	const filteredResults = activeFilter ? data.filter((product) => product.tags.includes(activeFilter)) : data;
+	const listData = data.slice(0, 300);
+	const filteredResults = activeFilter ? listData.filter((product) => product.tags.includes(activeFilter)) : listData;
 	const searchResults = searchData ? filterData(data, searchData) : filteredResults;
 
 	return (
