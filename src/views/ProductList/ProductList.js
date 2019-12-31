@@ -103,7 +103,7 @@ const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchDat
 					</Button>
 				)}
 				<InfiniteScroll
-					dataLength={filteredResults.length}
+					dataLength={searchResults.length}
 					hasMore
 					next={fetchMoreData}
 					style={{ overflow: 'hidden', padding: '2px' }}
