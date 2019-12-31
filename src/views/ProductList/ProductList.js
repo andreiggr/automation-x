@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid, Typography, CircularProgress, Button } from '@material-ui/core';
-import { ProductsToolbar, ProductCard } from './components';
+import { ProductsToolbar, ProductCard, InfiniteList } from './components';
 import { fetchData, setActiveFilter } from 'actions';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchData }) => {
-	const [ dataLimit, setDataLimit ] = useState(12);
 	const classes = useStyles();
 
 	useEffect(
@@ -53,28 +51,21 @@ const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchDat
 		[ data ]
 	);
 
-	const fetchMoreData = () => {
-		setTimeout(() => {
-			setDataLimit(dataLimit + 8);
-		}, 300);
-	};
-
 	const onClearFilters = () => {
 		setActiveFilter('');
 	};
 
-	const filterData = () => {
+	const filterData = (data, filter) => {
 		let filtered = data.filter((product) => {
-			let title = product.title.toLowerCase().search(searchData) !== -1;
+			let title = product.title.toLowerCase().search(filter) !== -1;
 			return title;
 		});
 		return filtered;
 	};
 
 	const featured = data.slice(0, 4);
-	const recent = data.slice(0, dataLimit);
-	const filteredResults = activeFilter ? recent.filter((product) => product.tags.includes(activeFilter)) : recent;
-	const searchResults = searchData ? filterData() : filteredResults;
+	const filteredResults = activeFilter ? data.filter((product) => product.tags.includes(activeFilter)) : data;
+	const searchResults = searchData ? filterData(data, searchData) : filteredResults;
 
 	return (
 		<div className={classes.root}>
@@ -102,20 +93,7 @@ const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchDat
 						<Typography color="primary">{activeFilter}</Typography>
 					</Button>
 				)}
-				<InfiniteScroll
-					dataLength={searchResults.length}
-					hasMore
-					next={fetchMoreData}
-					style={{ overflow: 'hidden', padding: '2px' }}
-				>
-					<Grid container spacing={1}>
-						{searchResults.map((product) => (
-							<Grid item key={product.id} sm={3} xs={6}>
-								<ProductCard product={product} />
-							</Grid>
-						))}
-					</Grid>
-				</InfiniteScroll>
+				<InfiniteList data={searchResults} />
 			</div>
 		</div>
 	);
