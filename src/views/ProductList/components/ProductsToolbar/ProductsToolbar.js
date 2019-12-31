@@ -21,13 +21,12 @@ import { setActiveFilter, setSearchData } from 'actions';
 import Categories from 'layouts/Main/components/Topbar/Categories/Categories';
 
 const useStyles = makeStyles((theme) => ({
-	root: { marginBottom: 100 },
+	root: {},
 	formControl: {
 		margin: theme.spacing(1),
 		minWidth: 95
 	},
 	row: {
-		minHeight: '42px',
 		display: 'flex',
 		alignItems: 'center',
 		flexWrap: 'wrap',
@@ -55,9 +54,12 @@ const ProductsToolbar = (props) => {
 
 	const classes = useStyles();
 
+	const [ search, setSearch ] = useState('');
+
 	const onSearch = (data) => {
 		const searchData = data.toLowerCase();
 		setActiveFilter('');
+		setSearch(data);
 		setSearchData(searchData);
 	};
 
@@ -70,7 +72,7 @@ const ProductsToolbar = (props) => {
 					className={classes.searchInput}
 					onChange={(event) => onSearch(event.target.value)}
 					placeholder="Search product"
-					value={searchData}
+					value={search}
 				/>
 				<Link to="/upload">
 					<Button color="primary" variant="contained">
