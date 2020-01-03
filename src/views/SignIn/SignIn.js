@@ -12,6 +12,9 @@ import {
   Typography
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { loginUser } from '../../actions/auth';
 
 import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
 
@@ -126,7 +129,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { history } = props;
+  const { history, logIn } = props;
 
   const classes = useStyles();
 
@@ -172,6 +175,10 @@ const SignIn = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
+
+    const { email, password } = formState.values;
+
+    logIn(email, password);
     history.push('/');
   };
 
@@ -238,7 +245,7 @@ const SignIn = props => {
                 >
                   Sign in
                 </Typography>
-                <Typography
+                {/* <Typography
                   color="textSecondary"
                   gutterBottom
                 >
@@ -278,7 +285,7 @@ const SignIn = props => {
                   variant="body1"
                 >
                   or login with email address
-                </Typography>
+                </Typography> */}
                 <TextField
                   className={classes.textField}
                   error={hasError('email')}
@@ -312,8 +319,9 @@ const SignIn = props => {
                   color="primary"
                   disabled={!formState.isValid}
                   fullWidth
+                  onClick={handleSignIn}
+                  //type="submit"
                   size="large"
-                  type="submit"
                   variant="contained"
                 >
                   Sign in now
@@ -344,4 +352,18 @@ SignIn.propTypes = {
   history: PropTypes.object
 };
 
-export default withRouter(SignIn);
+
+const mapStateToProps = (state) => {
+  return {
+    state: state,
+    loginError: state.loginError,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logIn: (email, password) => dispatch(loginUser(email, password))
+  };
+};
+
+export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(SignIn);

@@ -6,8 +6,12 @@ import { makeStyles } from '@material-ui/styles';
 import { AppBar, Toolbar, Badge, Hidden, IconButton, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
+import { withRouter } from 'react-router';
 import InputIcon from '@material-ui/icons/Input';
 import Categories from './Categories/Categories';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../../../actions/auth';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -22,38 +26,66 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Topbar = (props) => {
-	const { className, onSidebarOpen, ...rest } = props;
+	const { className, onSidebarOpen, user, logout, history, ...rest } = props;
 
 	const classes = useStyles();
 
-	const [ notifications ] = useState([]);
+	const [notifications] = useState([]);
+
+	const handleLogOut = () => {
+		logout()
+	}
+	const handleLogin = () => {
+		history.replace('sign-in')
+	}
 
 	return (
-		<AppBar {...rest} className={clsx(classes.root, className)}>
+		<AppBar
+			{...rest}
+			className={clsx(classes.root, className)}
+		>
 			<Toolbar>
 				<RouterLink to="/">
-					<img alt="Logo" src="/images/logos/logo--white.svg" />
+					<img
+						alt="Logo"
+						src="/images/logos/logo--white.svg"
+					/>
 				</RouterLink>
 				<div className={classes.flexGrow} />
-				{/* <Hidden mdDown>
-          <IconButton color="inherit">
-            <Badge
+				<Hidden mdDown>
+					<IconButton color="inherit">
+						{/* <Badge
               badgeContent={notifications.length}
               color="primary"
               variant="dot"
             >
               <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton
-            className={classes.signOutButton}
-            color="inherit"
-          >
-            <InputIcon />
-          </IconButton>
-        </Hidden> */}
+            </Badge> */}
+					</IconButton>
+					{user &&
+						<IconButton
+							className={classes.signOutButton}
+							color="inherit"
+							onClick={handleLogOut}
+						>
+							<InputIcon />
+						</IconButton>
+
+					}
+					{!user &&
+						<Button
+							color="secondary"
+							onClick={handleLogin}
+							size="small"
+							variant="contained"
+						>Log in</Button>
+					}
+				</Hidden>
 				<Hidden lgUp>
-					<IconButton color="inherit" onClick={onSidebarOpen}>
+					<IconButton
+						color="inherit"
+						onClick={onSidebarOpen}
+					>
 						<MenuIcon />
 					</IconButton>
 				</Hidden>
@@ -67,4 +99,17 @@ Topbar.propTypes = {
 	onSidebarOpen: PropTypes.func
 };
 
-export default Topbar;
+
+const mapStateToProps = (state) => {
+	return {
+		user: state.user
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		logout: () => dispatch(logoutUser()),
+	};
+};
+
+export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Topbar);
