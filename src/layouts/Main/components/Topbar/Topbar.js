@@ -30,26 +30,20 @@ const Topbar = (props) => {
 
 	const classes = useStyles();
 
-	const [notifications] = useState([]);
+	const [ notifications ] = useState([]);
 
 	const handleLogOut = () => {
-		logout()
-	}
+		logout();
+	};
 	const handleLogin = () => {
-		history.replace('sign-in')
-	}
+		history.replace('sign-in');
+	};
 
 	return (
-		<AppBar
-			{...rest}
-			className={clsx(classes.root, className)}
-		>
+		<AppBar {...rest} className={clsx(classes.root, className)}>
 			<Toolbar>
 				<RouterLink to="/">
-					<img
-						alt="Logo"
-						src="/images/logos/logo--white.svg"
-					/>
+					<img alt="Logo" src="/images/logos/logo--white.svg" />
 				</RouterLink>
 				<div className={classes.flexGrow} />
 				<Hidden mdDown>
@@ -62,30 +56,19 @@ const Topbar = (props) => {
               <NotificationsIcon />
             </Badge> */}
 					</IconButton>
-					{user &&
-						<IconButton
-							className={classes.signOutButton}
-							color="inherit"
-							onClick={handleLogOut}
-						>
+					{user && (
+						<IconButton className={classes.signOutButton} color="inherit" onClick={handleLogOut}>
 							<InputIcon />
 						</IconButton>
-
-					}
-					{!user &&
-						<Button
-							color="secondary"
-							onClick={handleLogin}
-							size="small"
-							variant="contained"
-						>Log in</Button>
-					}
+					)}
+					{!user && (
+						<Button color="secondary" onClick={handleLogin} size="small" variant="contained">
+							Log in
+						</Button>
+					)}
 				</Hidden>
 				<Hidden lgUp>
-					<IconButton
-						color="inherit"
-						onClick={onSidebarOpen}
-					>
+					<IconButton color="inherit" onClick={onSidebarOpen}>
 						<MenuIcon />
 					</IconButton>
 				</Hidden>
@@ -99,16 +82,15 @@ Topbar.propTypes = {
 	onSidebarOpen: PropTypes.func
 };
 
-
 const mapStateToProps = (state) => {
 	return {
-		user: state.user
+		user: state.auth.user
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		logout: () => dispatch(logoutUser()),
+		logout: () => dispatch(logoutUser())
 	};
 };
 
