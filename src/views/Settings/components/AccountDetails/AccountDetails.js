@@ -12,21 +12,22 @@ import {
   Button,
   TextField
 } from '@material-ui/core';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
 const AccountDetails = props => {
-  const { className, ...rest } = props;
+  const { className, user, ...rest } = props;
 
   const classes = useStyles();
 
   const [values, setValues] = useState({
-    firstName: 'Shen',
-    lastName: 'Zhi',
-    email: 'shen.zhi@devias.io',
-    phone: '',
+    // firstName: 'Shen',
+    // lastName: 'Zhi',
+    email: user.email,
+    phone: user.phoneNumber,
     state: 'Alabama',
     country: 'USA'
   });
@@ -72,7 +73,7 @@ const AccountDetails = props => {
             container
             spacing={3}
           >
-            <Grid
+            {/* <Grid
               item
               md={6}
               xs={12}
@@ -104,7 +105,7 @@ const AccountDetails = props => {
                 value={values.lastName}
                 variant="outlined"
               />
-            </Grid>
+            </Grid> */}
             <Grid
               item
               md={6}
@@ -144,34 +145,6 @@ const AccountDetails = props => {
             >
               <TextField
                 fullWidth
-                label="Select State"
-                margin="dense"
-                name="state"
-                onChange={handleChange}
-                required
-                select
-                // eslint-disable-next-line react/jsx-sort-props
-                SelectProps={{ native: true }}
-                value={values.state}
-                variant="outlined"
-              >
-                {states.map(option => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
                 label="Country"
                 margin="dense"
                 name="country"
@@ -201,4 +174,16 @@ AccountDetails.propTypes = {
   className: PropTypes.string
 };
 
-export default AccountDetails;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountDetails);
