@@ -2,7 +2,8 @@ export default (
 	state = {
 		user: undefined,
 		loginError: undefined,
-		signupError: undefined
+		signupError: undefined,
+		passwordError: undefined
 	},
 	action
 ) => {
@@ -23,6 +24,11 @@ export default (
 			return {
 				...state,
 				signupError: action.error.message
+			};
+		case 'PASSWORD_UPDATE_ERROR':
+			return {
+				...state,
+				passwordError: action.error.message
 			};
 		case 'LOGOUT_SUCCESS':
 			return '';

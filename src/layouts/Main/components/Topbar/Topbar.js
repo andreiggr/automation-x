@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { AppBar, Toolbar, Badge, Hidden, IconButton, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Badge, Hidden, IconButton, Button, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import { withRouter } from 'react-router';
@@ -22,6 +22,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 	signOutButton: {
 		marginLeft: theme.spacing(1)
+	},
+	logout: {
+		color: 'white',
+		fontSize: '15px',
+		marginRight: '5px'
 	}
 }));
 
@@ -58,6 +63,7 @@ const Topbar = (props) => {
 					</IconButton>
 					{user && (
 						<IconButton className={classes.signOutButton} color="inherit" onClick={handleLogOut}>
+							<Typography className={classes.logout}> Logout</Typography>
 							<InputIcon />
 						</IconButton>
 					)}
