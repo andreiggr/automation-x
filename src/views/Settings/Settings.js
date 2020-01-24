@@ -3,6 +3,9 @@ import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 
 import { Notifications, Password, AccountProfile, AccountDetails } from './components';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -10,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Settings = () => {
+const Settings = ({ user }) => {
   const classes = useStyles();
 
   return (
@@ -57,4 +60,16 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

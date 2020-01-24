@@ -13,6 +13,10 @@ import {
   Button,
   LinearProgress
 } from '@material-ui/core';
+import { connect } from 'react-redux';
+
+const defaultPic = require('../../../../assets/defaultPic.png');
+
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -21,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     marginLeft: 'auto',
-    height: 110,
+    height: 100,
     width: 100,
     flexShrink: 0,
     flexGrow: 0
@@ -35,17 +39,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AccountProfile = props => {
-  const { className, ...rest } = props;
+  const { className, user, ...rest } = props;
 
   const classes = useStyles();
 
-  const user = {
-    name: 'Shen Zhi',
-    city: 'Los Angeles',
-    country: 'USA',
-    timezone: 'GTM-7',
-    avatar: '/images/avatars/avatar_11.png'
-  };
 
   return (
     <Card
@@ -57,37 +54,30 @@ const AccountProfile = props => {
           <div>
             <Typography
               gutterBottom
-              variant="h2"
+              variant="h3"
             >
-              John Doe
+              {user.email}
             </Typography>
             <Typography
               className={classes.locationText}
               color="textSecondary"
               variant="body1"
             >
-              {user.city}, {user.country}
-            </Typography>
-            <Typography
-              className={classes.dateText}
-              color="textSecondary"
-              variant="body1"
-            >
-              {moment().format('hh:mm A')} ({user.timezone})
+              Bucharest, Romania
             </Typography>
           </div>
           <Avatar
             className={classes.avatar}
-            src={user.avatar}
+            src={user.photoURL ? user.photoURL : defaultPic}
           />
         </div>
-        <div className={classes.progress}>
+        {/* <div className={classes.progress}>
           <Typography variant="body1">Profile Completeness: 70%</Typography>
           <LinearProgress
             value={70}
             variant="determinate"
           />
-        </div>
+        </div> */}
       </CardContent>
       <Divider />
       <CardActions>
@@ -108,4 +98,15 @@ AccountProfile.propTypes = {
   className: PropTypes.string
 };
 
-export default AccountProfile;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile);

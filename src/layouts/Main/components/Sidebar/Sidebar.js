@@ -3,16 +3,12 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Drawer } from '@material-ui/core';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import PeopleIcon from '@material-ui/icons/People';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
-import ImageIcon from '@material-ui/icons/Image';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import AirplayIcon from '@material-ui/icons/Airplay';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { withRouter } from 'react-router-dom';
 
 import { Profile, SidebarNav, UpgradePlan } from './components';
 
@@ -40,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Sidebar = (props) => {
-	const { open, variant, onClose, className, ...rest } = props;
+	const { open, variant, onClose, className, user, ...rest } = props;
 
 	const classes = useStyles();
 
@@ -52,10 +48,10 @@ const Sidebar = (props) => {
 		}
 	];
 
-	const authPages = [
+	const userPages = [
 		{
-			title: 'Upload App (Soon)',
-			//  href: '/upload',
+			title: 'Upload App (Soon..)',
+			// href: '/upload',
 			icon: <CloudUploadIcon />
 		},
 		{
@@ -65,13 +61,17 @@ const Sidebar = (props) => {
 		}
 	];
 
-	const pages = publicPages.concat(authPages);
+	var pages = publicPages.concat(user ? userPages : []);
 
 	return (
 		<Drawer anchor="left" classes={{ paper: classes.drawer }} onClose={onClose} open={open} variant={variant}>
 			<div {...rest} className={clsx(classes.root, className)}>
-				{/* <Profile />
-        <Divider className={classes.divider} /> */}
+				{user && (
+					<React.Fragment>
+						<Profile />
+						<Divider className={classes.divider} />
+					</React.Fragment>
+				)}
 				<SidebarNav className={classes.nav} pages={pages} />
 				{/* <UpgradePlan /> */}
 			</div>
@@ -86,4 +86,14 @@ Sidebar.propTypes = {
 	variant: PropTypes.string.isRequired
 };
 
-export default Sidebar;
+const mapStateToProps = (state) => {
+	return {
+		user: state.auth.user
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {};
+};
+
+export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Sidebar);
