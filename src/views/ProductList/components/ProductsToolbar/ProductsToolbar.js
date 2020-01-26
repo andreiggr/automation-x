@@ -57,11 +57,13 @@ const ProductsToolbar = (props) => {
 	const [ search, setSearch ] = useState('');
 
 	const onSearch = (data) => {
-		const searchData = data.toLowerCase();
+		const searchData = data.toLowerCase().replace(/[^a-zA-Z]/g, '');
 		setActiveFilter('');
 		setSearch(data);
 		setSearchData(searchData);
 	};
+	var answer = '5A';
+	answer = answer.replace(/[^a-zA-Z]/g, '');
 
 	return (
 		<div {...rest} className={clsx(classes.root, className)}>
