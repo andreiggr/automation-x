@@ -67,7 +67,6 @@ const Sidebar = (props) => {
 	const logoutPage = [
 		{
 			title: 'Logout',
-			href: '/',
 			icon: <KeyboardTabIcon />
 		}
 	];
@@ -91,7 +90,7 @@ const Sidebar = (props) => {
 						<Divider className={classes.divider} />
 					</React.Fragment>
 				)}
-				<SidebarNav className={classes.nav} pages={pages} />
+				<SidebarNav className={classes.nav} pages={pages} onLogout={() => logout()} />
 				{/* <UpgradePlan /> */}
 			</div>
 		</Drawer>
