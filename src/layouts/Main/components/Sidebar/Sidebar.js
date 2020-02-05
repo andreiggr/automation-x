@@ -9,6 +9,9 @@ import AirplayIcon from '@material-ui/icons/Airplay';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
+import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
+import KeyboardTabIcon from '@material-ui/icons/KeyboardTab';
+import { logoutUser } from '../../../../actions/auth';
 
 import { Profile, SidebarNav, UpgradePlan } from './components';
 
@@ -36,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Sidebar = (props) => {
-	const { open, variant, onClose, className, user, ...rest } = props;
+	const { open, variant, onClose, className, user, logout, ...rest } = props;
 
 	const classes = useStyles();
 
@@ -45,15 +48,15 @@ const Sidebar = (props) => {
 			title: 'Apps',
 			href: '/products',
 			icon: <AirplayIcon />
-		}
-	];
-
-	const userPages = [
+		},
 		{
 			title: 'Upload App (Soon..)',
 			// href: '/upload',
 			icon: <CloudUploadIcon />
-		},
+		}
+	];
+
+	const userPages = [
 		{
 			title: 'Settings',
 			href: '/settings',
@@ -61,7 +64,23 @@ const Sidebar = (props) => {
 		}
 	];
 
-	var pages = publicPages.concat(user ? userPages : []);
+	const logoutPage = [
+		{
+			title: 'Logout',
+			href: '/',
+			icon: <KeyboardTabIcon />
+		}
+	];
+
+	const signInPage = [
+		{
+			title: 'Sign In',
+			href: '/sign-in',
+			icon: <KeyboardReturnIcon />
+		}
+	];
+
+	var pages = publicPages.concat(user ? userPages : []).concat(user ? logoutPage : signInPage);
 
 	return (
 		<Drawer anchor="left" classes={{ paper: classes.drawer }} onClose={onClose} open={open} variant={variant}>
@@ -93,7 +112,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-	return {};
+	return {
+		logout: () => dispatch(logoutUser())
+	};
 };
 
 export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Sidebar);
