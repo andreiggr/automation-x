@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid, Typography, CircularProgress, Button } from '@material-ui/core';
 import { ProductsToolbar, ProductCard, InfiniteList } from './components';
-import { fetchData, setActiveFilter } from 'actions';
+import { fetchData, setActiveFilter, setSearchData } from 'actions';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router';
@@ -41,18 +41,21 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchData }) => {
+const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchData, setSearchData }) => {
 	const classes = useStyles();
 
-	useEffect(
-		() => {
-			fetchData();
-		},
-		[ data ]
-	);
+	useEffect(() => {
+		fetchData();
+		onClearFilters();
+		onClearSearch();
+	}, []);
 
 	const onClearFilters = () => {
 		setActiveFilter('');
+	};
+
+	const onClearSearch = () => {
+		setSearchData('');
 	};
 
 	const filterData = (data, filter) => {
@@ -111,7 +114,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		fetchData: () => dispatch(fetchData()),
-		setActiveFilter: (filter) => dispatch(setActiveFilter(filter))
+		setActiveFilter: (filter) => dispatch(setActiveFilter(filter)),
+		setSearchData: (searchData) => dispatch(setSearchData(searchData))
 	};
 };
 
