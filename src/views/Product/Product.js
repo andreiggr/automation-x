@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Product = ({ selectedProduct }) => {
 	const classes = useStyles();
-	const src = `https://appetize.io/embed/${selectedProduct.publicKey}?device=android&orientation=portrait&scale=43&xdocMsg=true&deviceColor=white&debug=false&screenOnly=false&autoplay=true`;
 
 	const [ run, setRun ] = useState(false);
 	const [ expired, setExpired ] = useState(false);
@@ -73,7 +72,7 @@ const Product = ({ selectedProduct }) => {
 				<ContentCard />
 			</Grid>
 			<Grid direction="column" item>
-				<AppFrame expired={expired} runApp={run} src={src} />
+				<AppFrame expired={expired} runApp={run} appId={selectedProduct.publicKey} handleFrameStart={onStartApp} />
 			</Grid>
 		</Grid>
 	);

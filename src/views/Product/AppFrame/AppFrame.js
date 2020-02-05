@@ -10,7 +10,15 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		justifyContent: 'center',
 		paddingLeft: '50px',
-		position: 'relative'
+		position: 'relative',
+	},
+	expiredFrame: {
+		display: 'flex',
+		justifyContent: 'center',
+		paddingLeft: '50px',
+		position: 'relative',
+		pointerEvents: 'none'
+
 	},
 	phoneContent: {
 		position: 'relative'
@@ -33,80 +41,69 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const AppFrame = ({ src, runApp, expired }) => {
+const AppFrame = ({ appId, runApp, expired, handleFrameStart }) => {
+
+	const src = `https://appetize.io/embed/${appId}?device=android&orientation=portrait&scale=43&xdocMsg=true&deviceColor=white&debug=false&screenOnly=false`;
+
+	var iframe = document.querySelector('iframe');
+
+	const requestSession = () => {
+		iframe.contentWindow.postMessage('requestSession', '*');
+	}
+
+
+	const endSession = () => {
+		iframe.contentWindow.postMessage('endSession', '*');
+	}
+
+	useEffect(() => {
+		var messageEventHandler = function(event){
+			if(event.data == 'sessionRequested'){
+				console.log(event.data);
+				handleFrameStart();
+			}
+		};
+		
+		window.addEventListener('message', messageEventHandler, false);
+
+		if (runApp === true) {
+			requestSession()
+		}
+		if (expired === true) {
+			endSession()
+		}
+
+	}, [runApp, expired])
+
 	const classes = useStyles();
 	return (
-		<div className={classes.appFrame}>
-			{runApp && (
-				<div className={classes.phoneContent}>
-					<iframe
-						frameBorder="0"
-						height="520px"
-						scrolling="no"
-						src={src}
-						width="300px"
-					/>
-					<div className={classes.countdown}>
-						<CountdownCircleTimer
-							colors={[['#004777', 0.33], ['#F7B801', 0.33], ['#A30000']]}
-							durationSeconds={40}
-							isPlaying
-							size={50}
-						/>
-					</div>
+		<div className={expired ? classes.expiredFrame : classes.appFrame}>
+			<div className={classes.phoneContent}>
+				<iframe
+					frameBorder="0"
+					height="520px"
+					scrolling="no"
+					src={src}
+					width="300px"
+				/>
+				<div className={classes.countdown}>
+					{runApp && <CountdownCircleTimer
+						colors={[['#004777', 0.33], ['#F7B801', 0.33], ['#A30000']]}
+						durationSeconds={40}
+						isPlaying={runApp}
+						size={50}
+					/>}
+					{expired &&
+						<Typography
+							align="left"
+							color="textSecondary"
+							variant="h5"
+						>
+							Your time has expired
+				</Typography>
+					}
 				</div>
-			)}
-			{!runApp &&
-				!expired && (
-					<div>
-						<Card>
-							<CardContent>
-								<Grid
-									className={classes.runCard}
-									direction="column"
-								>
-									<InfoIcon
-										className={classes.icon}
-										color="action"
-										fontSize="large"
-									/>
-									<Typography
-										align="center"
-										color="textSecondary"
-										variant="h4"
-									>
-										Press Run to Start
-								</Typography>
-								</Grid>
-							</CardContent>
-						</Card>
-					</div>
-				)}
-			{expired && (
-				<div>
-					<Card>
-						<CardContent>
-							<Grid
-								className={classes.runCard}
-								direction="column"
-							>
-								<TimerOffIcon
-									className={classes.icon}
-									color="action"
-									fontSize="large"
-								/>
-								<Typography
-									align="center"
-									color="textSecondary"
-									variant="h4"
-								>
-									Your time has expired
-								</Typography>
-							</Grid>
-						</CardContent>
-					</Card>
-				</div>
-			)}
+			</div>
 		</div>
 	);
 };
