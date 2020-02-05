@@ -34,11 +34,14 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const Product = ({ selectedProduct }) => {
+const Product = ({ selectedProduct, user }) => {
 	const classes = useStyles();
 
 	const [ run, setRun ] = useState(false);
 	const [ expired, setExpired ] = useState(false);
+
+	const isSigned = user ? true : false;
+	const sessionTime = isSigned ? 90000 : 40000;
 
 	const onStartApp = () => {
 		setRun(true);
@@ -49,7 +52,7 @@ const Product = ({ selectedProduct }) => {
 		setTimeout(() => {
 			setRun(false);
 			setExpired(true);
-		}, 40000);
+		}, sessionTime);
 	};
 
 	return (
@@ -72,7 +75,13 @@ const Product = ({ selectedProduct }) => {
 				<ContentCard />
 			</Grid>
 			<Grid direction="column" item>
-				<AppFrame expired={expired} runApp={run} appId={selectedProduct.publicKey} handleFrameStart={onStartApp} />
+				<AppFrame
+					sessionTime={sessionTime}
+					expired={expired}
+					runApp={run}
+					appId={selectedProduct.publicKey}
+					handleFrameStart={onStartApp}
+				/>
 			</Grid>
 		</Grid>
 	);
@@ -82,6 +91,7 @@ Product.propTypes = {};
 
 const mapStateToProps = (state) => {
 	return {
+		user: state.auth.user,
 		data: state.data,
 		selectedProduct: state.selectedProduct
 	};
