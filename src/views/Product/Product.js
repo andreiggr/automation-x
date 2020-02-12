@@ -37,11 +37,12 @@ const useStyles = makeStyles((theme) => ({
 const Product = ({ selectedProduct, user }) => {
 	const classes = useStyles();
 
-	const [ run, setRun ] = useState(false);
-	const [ expired, setExpired ] = useState(false);
+	const [run, setRun] = useState(false);
+	const [expired, setExpired] = useState(false);
 
 	const isSigned = user ? true : false;
 	const sessionTime = isSigned ? 90000 : 40000;
+	const hasAppFrame = (selectedProduct.appId === "null") ? false : true;
 
 	const onStartApp = () => {
 		setRun(true);
@@ -63,9 +64,9 @@ const Product = ({ selectedProduct, user }) => {
 						<ArrowBackIosIcon fontSize="small" />
 						<Typography className={classes.categoryTitle}>Go back</Typography>
 					</Link>
-					<Button color="primary" disabled={expired} onClick={onStartApp} variant="contained">
+					{hasAppFrame && <Button color="primary" disabled={expired} onClick={onStartApp} variant="contained">
 						Run on Emulator
-					</Button>
+					</Button>}
 				</div>
 				<GitCard
 					forks={selectedProduct.forksRepo}
@@ -74,7 +75,7 @@ const Product = ({ selectedProduct, user }) => {
 				/>
 				<ContentCard />
 			</Grid>
-			<Grid direction="column" item>
+			{hasAppFrame && <Grid direction="column" item>
 				<AppFrame
 					sessionTime={sessionTime}
 					expired={expired}
@@ -82,7 +83,7 @@ const Product = ({ selectedProduct, user }) => {
 					appId={selectedProduct.publicKey}
 					handleFrameStart={onStartApp}
 				/>
-			</Grid>
+			</Grid>}
 		</Grid>
 	);
 };
