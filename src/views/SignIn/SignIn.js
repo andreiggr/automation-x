@@ -168,15 +168,12 @@ const SignIn = (props) => {
 		}));
 	};
 
-	const handleSignIn = async (event) => {
+	const handleSignIn = (event) => {
 		event.preventDefault();
 
 		const { email, password } = formState.values;
 
 		logIn(email, password);
-		// {
-		// 	(await !loginError) && history.push('/');
-		// }
 	};
 
 	const hasError = (field) => (formState.touched[field] && formState.errors[field] ? true : false);
@@ -288,8 +285,8 @@ const SignIn = (props) => {
 									color="primary"
 									disabled={!formState.isValid}
 									fullWidth
-									onClick={handleSignIn}
-									//type="submit"
+									//onClick={handleSignIn}
+									type="submit"
 									size="large"
 									variant="contained"
 								>

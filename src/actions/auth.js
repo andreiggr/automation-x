@@ -103,6 +103,7 @@ export const signUp = (email, password) => (dispatch) => {
 		.auth()
 		.createUserWithEmailAndPassword(email, password)
 		.then(() => dispatch(signupError('')))
+		.then(()=> dispatch(loginUser(email,password)))
 		.catch((error) => {
 			dispatch(signupError(error));
 		});

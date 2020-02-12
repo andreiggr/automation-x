@@ -123,21 +123,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = (props) => {
-	const { history, signUp, signupError } = props;
+	const { history, signUp, signupError, user } = props;
 
 	const classes = useStyles();
 
-	const [ formState, setFormState ] = useState({
+	const [formState, setFormState] = useState({
 		isValid: false,
 		values: {},
 		touched: {},
 		errors: {}
 	});
-	const [ successMessage, setSuccessMessage ] = useState('');
-
 	useEffect(
 		() => {
 			const errors = validate(formState.values, schema);
+
+			if (user) {
+				history.replace('/');
+			}
 
 			setFormState((formState) => ({
 				...formState,
@@ -145,7 +147,7 @@ const SignUp = (props) => {
 				errors: errors || {}
 			}));
 		},
-		[ formState.values, signupError ]
+		[formState.values, signupError, user]
 	);
 
 	const handleChange = (event) => {
@@ -172,7 +174,6 @@ const SignUp = (props) => {
 		event.preventDefault();
 		const { email, password } = formState.values;
 		signUp(email, password);
-		setSuccessMessage('Great. Your account has been created! Please go back and login.');
 	};
 
 	const hasError = (field) => (formState.touched[field] && formState.errors[field] ? true : false);
@@ -262,8 +263,6 @@ const SignUp = (props) => {
 								)}
 
 								{signupError && <Typography color="error">{signupError}</Typography>}
-								{!signupError &&
-								successMessage && <Typography color="primary">{successMessage}</Typography>}
 								<Button
 									className={classes.signUpButton}
 									color="primary"
@@ -297,14 +296,13 @@ SignUp.propTypes = {
 const mapStateToProps = (state) => {
 	return {
 		user: state.auth.user,
-		state,
 		signupError: state.auth.signupError
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		signUp: (email, password) => dispatch(signUp(email, password))
+		signUp: (email, password) => dispatch(signUp(email, password)),
 	};
 };
 
