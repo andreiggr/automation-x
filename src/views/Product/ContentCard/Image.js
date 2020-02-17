@@ -9,7 +9,7 @@ export function Image(props) {
 
 
 export const ImageOrLink = props => {
-    if (props.href.match(/\.(jpe?g|png|gif)$/)) {
+    if (props.href.match(/\.(jpe?g|png|gif|webp)$/)) {
         return <img src={props.href} />
     }
 

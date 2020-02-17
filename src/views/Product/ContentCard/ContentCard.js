@@ -55,7 +55,7 @@ const ContentCard = (props) => {
 		Axios.get(rawReadme).then((res) => setMarkdown(res.data))
 	}, []);
 
-	const transformImageUri = (input) => (/^https?:/.test(input) ? input : `${rawGit}/${input}`);
+	const transformImageUri = (input) => (input.includes('http') ? input : `${rawGit}/${input}`);
 
 	return (
 		<Card
@@ -67,7 +67,7 @@ const ContentCard = (props) => {
 					<MarkdownGithub
 						className={classes.markdown}
 						escapeHtml={false}
-						skipHtml= {true}
+						skipHtml= {false}
 						renderers={{
 							image: Image,
 							code: CodeBlock,
