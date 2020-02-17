@@ -6,7 +6,7 @@ import { ProductCard } from '../../components';
 const InfiniteList = ({ data }) => {
 	const [ dataLimit, setDataLimit ] = useState(12);
 
-	const dataList = data.slice(0, dataLimit);
+	var dataList = data.slice(0, dataLimit);
 
 	const fetchMoreData = () => {
 		setTimeout(() => {
@@ -17,7 +17,7 @@ const InfiniteList = ({ data }) => {
 	return (
 		<div>
 			<InfiniteScroll
-				dataLength={data.length}
+				dataLength={dataLimit}
 				hasMore
 				next={fetchMoreData}
 				style={{ overflow: 'hidden', padding: '2px' }}
