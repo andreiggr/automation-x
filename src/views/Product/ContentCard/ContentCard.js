@@ -15,19 +15,30 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		marginBottom: '20px',
 		marginTop: '20px',
-		padding: '7px'
 	},
 	content: {
-		marginTop: '12px',
 		display: 'flex',
 		alignItems: 'center',
-		padding: '20px'
+		padding: '0 20px'
 	},
 	markdown: {
+		fontFamily: "Roboto",
 		maxWidth: '700px',
 		display: 'flex',
 		flexDirection: 'column',
-		'& a': { color: 'black', textDecoration: 'underline' }
+		'& a': {
+			color: 'black',
+		},
+		'& .headline-primary': {
+			paddingBottom: '5px',
+			borderBottom: '1px solid #eaecef',
+			marginBottom: '20px',
+			marginTop: '20px'
+		},
+		'& img': {
+			marginTop: "10px",
+			marginBottom: "10px"
+		}
 	}
 }));
 
@@ -52,16 +63,11 @@ const ContentCard = (props) => {
 			className={clsx(classes.root, className)}
 		>
 			<CardContent>
-				<Typography
-					align="center"
-					variant="h2"
-				>
-					{title}
-				</Typography>
 				<div className={classes.content}>
 					<MarkdownGithub
 						className={classes.markdown}
 						escapeHtml={false}
+						skipHtml= {true}
 						renderers={{
 							image: Image,
 							code: CodeBlock,
