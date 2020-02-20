@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		height: '42px',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+		flex: 0
 	},
 	contentGrid: {
 		flex:1,

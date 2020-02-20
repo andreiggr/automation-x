@@ -18,12 +18,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 	content: {
 		display: 'flex',
-		alignItems: 'center',
-		padding: '0 20px'
+		padding: '0 20px',
+		justifyContent: 'center'
 	},
 	markdown: {
 		fontFamily: "Roboto",
-		maxWidth: '700px',
 		display: 'flex',
 		flexDirection: 'column',
 		'& a': {
