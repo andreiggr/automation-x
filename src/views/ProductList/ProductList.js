@@ -67,8 +67,8 @@ const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchDat
 	};
 
 	const featured = data.slice(0, 4);
-	const listData = data.slice(0, 300);
-	const filteredResults = activeFilter ? listData.filter((product) => product.tags.includes(activeFilter)) : listData;
+	const listData = data.slice(0, data.length - 1)
+	const filteredResults = activeFilter ? listData.filter((product) => product.tags ? product.tags.includes(activeFilter) : "") : listData;
 	const searchResults = searchData ? filterData(data, searchData) : filteredResults;
 
 	return (
@@ -76,18 +76,18 @@ const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchDat
 			<ProductsToolbar />
 			<div className={classes.content}>
 				{!activeFilter &&
-				!searchData && (
-					<React.Fragment>
-						<Typography className={classes.categoryTitle}>Featured Flutter Projects</Typography>
-						<Grid container p={5} spacing={1}>
-							{featured.map((product, index) => (
-								<Grid className={classes.product} item key={product.id} sm={3} xs={6}>
-									<ProductCard product={product} />
-								</Grid>
-							))}
-						</Grid>
-					</React.Fragment>
-				)}
+					!searchData && (
+						<React.Fragment>
+							<Typography className={classes.categoryTitle}>Featured Flutter Projects</Typography>
+							<Grid container p={5} spacing={1}>
+								{featured.map((product, index) => (
+									<Grid className={classes.product} item key={product.id} sm={3} xs={6}>
+										<ProductCard product={product} />
+									</Grid>
+								))}
+							</Grid>
+						</React.Fragment>
+					)}
 				<Typography className={classes.categoryTitle}>
 					{!activeFilter && !searchData ? 'Recent' : `Results found: ${searchResults.length}`}
 				</Typography>
