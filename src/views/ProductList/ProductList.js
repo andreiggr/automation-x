@@ -58,18 +58,9 @@ const ProductList = ({ fetchData, data, activeFilter, setActiveFilter, searchDat
 		setSearchData('');
 	};
 
-	const filterData = (data, filter) => {
-		let filtered = data.filter((product) => {
-			let title = product.title.toLowerCase().search(filter) !== -1;
-			return title;
-		});
-		return filtered;
-	};
-
 	const featured = data.slice(0, 4);
-	const listData = data.slice(0, data.length - 1)
-	const filteredResults = activeFilter ? listData.filter((product) => product.tags ? product.tags.includes(activeFilter) : "") : listData;
-	const searchResults = searchData ? filterData(data, searchData) : filteredResults;
+	const filteredResults = activeFilter ? data.filter((product) => product.tags ? product.tags.includes(activeFilter) : "") : data;
+	const searchResults = searchData ? data.filter((product) => { let res = product.title.toLowerCase().search(searchData) !== -1; return res; }) : filteredResults;
 
 	return (
 		<div className={classes.root}>
