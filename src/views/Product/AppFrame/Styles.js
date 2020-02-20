@@ -2,7 +2,6 @@ const styles = {
 	appFrame: {
 		display: 'flex',
 		justifyContent: 'center',
-		paddingLeft: '50px',
 		position: 'relative'
 	},
 	expiredFrame: {

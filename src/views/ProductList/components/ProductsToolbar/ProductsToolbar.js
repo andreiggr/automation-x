@@ -6,17 +6,7 @@ import { Button, FormControl, InputLabel, Select, MenuItem } from '@material-ui/
 import { SearchInput } from 'components';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import {
-	uiFilters,
-	mediaFilters,
-	componentsFilters,
-	appsFilters,
-	elementsFilters,
-	menuFilters,
-	inputFilters,
-	filters
-} from './filterData';
+import { filters } from './filterData';
 import { setActiveFilter, setSearchData } from 'actions';
 import Categories from 'layouts/Main/components/Topbar/Categories/Categories';
 
@@ -50,11 +40,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductsToolbar = (props) => {
-	const { className, setActiveFilter, setSearchData, searchData, activeFilter, ...rest } = props;
+	const { className, user, setActiveFilter, setSearchData, searchData, activeFilter, ...rest } = props;
 
 	const classes = useStyles();
 
-	const [ search, setSearch ] = useState('');
+	const [search, setSearch] = useState('');
 
 	const onSearch = (data) => {
 		const searchData = data.toLowerCase().replace(/[^a-zA-Z]/g, '');
@@ -76,7 +66,7 @@ const ProductsToolbar = (props) => {
 					placeholder="Search product"
 					value={search}
 				/>
-				<Link to="/upload">
+				<Link to={user ? "" : "/sign-in"}>
 					<Button color="primary" variant="contained">
 						Add product
 					</Button>
@@ -93,7 +83,8 @@ ProductsToolbar.propTypes = {
 const mapStateToProps = (state) => {
 	return {
 		activeFilter: state.activeFilter,
-		searchData: state.searchData
+		searchData: state.searchData,
+		user: state.auth.user
 	};
 };
 

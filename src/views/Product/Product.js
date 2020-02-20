@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'row',
 		height: '42px',
 		justifyContent: 'space-between'
+	},
+	contentGrid: {
+		flex:1,
+		flexBasis: "auto"
 	}
 }));
 
@@ -58,7 +62,7 @@ const Product = ({ selectedProduct, user }) => {
 
 	return (
 		<Grid className={classes.root} container direction="row">
-			<Grid direction="column" item>
+			<Grid className={classes.contentGrid} direction="column">
 				<div className={classes.contentBar}>
 					<Link className={classes.backButton} to="/products">
 						<ArrowBackIosIcon fontSize="small" />
@@ -75,7 +79,7 @@ const Product = ({ selectedProduct, user }) => {
 				/>
 				<ContentCard />
 			</Grid>
-			{hasAppFrame && <Grid direction="column" item>
+			{hasAppFrame && <Grid  className={classes.contentGrid} direction="column"  item>
 				<AppFrame
 					sessionTime={sessionTime}
 					expired={expired}

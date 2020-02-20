@@ -48,12 +48,15 @@ const Routes = () => {
         layout={MainLayout}
         path="/users"
       />
+      {/* 
+      TO BE ADDED IN FUTURE VERSIONS
+
       <RouteWithLayout
         component={UploadView}
         exact
         layout={MainLayout}
         path="/upload"
-      />
+      /> */}
       <RouteWithLayout
         component={SettingsView}
         exact

@@ -2,12 +2,10 @@ import React from 'react';
 import { TextField, Grid, FormControlLabel, Checkbox, Modal } from '@material-ui/core';
 import ContentTable from 'components/ContentTable';
 
-const phoneImg = require('../../assets/phone.png');
 
 const Upload = () => {
 	return (
 		<div style={{ padding: '20px' }}>
-			<Modal />
 			<Grid container direction="row">
 				<Grid direction="column" item xs={6}>
 					<p style={{ fontSize: '22px', fontWeight: '500', marginTop: '36px', marginLeft: '18px' }}>
