@@ -34,20 +34,20 @@ const useStyles = makeStyles((theme) => ({
 		flex: 0
 	},
 	contentGrid: {
-		flex:1,
-		flexBasis: "auto"
+		flex: 1,
+		flexBasis: 'auto'
 	}
 }));
 
 const Product = ({ selectedProduct, user }) => {
 	const classes = useStyles();
 
-	const [run, setRun] = useState(false);
-	const [expired, setExpired] = useState(false);
+	const [ run, setRun ] = useState(false);
+	const [ expired, setExpired ] = useState(false);
 
 	const isSigned = user ? true : false;
 	const sessionTime = isSigned ? 90000 : 40000;
-	const hasAppFrame = (selectedProduct.appId === "null") ? false : true;
+	const hasAppFrame = selectedProduct.appId === 'null' ? false : true;
 
 	const onStartApp = () => {
 		setRun(true);
@@ -65,13 +65,15 @@ const Product = ({ selectedProduct, user }) => {
 		<Grid className={classes.root} container direction="row">
 			<Grid className={classes.contentGrid} direction="column">
 				<div className={classes.contentBar}>
-					<Link className={classes.backButton} to="/products">
+					<Link className={classes.backButton} to="/">
 						<ArrowBackIosIcon fontSize="small" />
 						<Typography className={classes.categoryTitle}>Go back</Typography>
 					</Link>
-					{hasAppFrame && <Button color="primary" disabled={expired} onClick={onStartApp} variant="contained">
-						Run on Emulator
-					</Button>}
+					{hasAppFrame && (
+						<Button color="primary" disabled={expired} onClick={onStartApp} variant="contained">
+							Run on Emulator
+						</Button>
+					)}
 				</div>
 				<GitCard
 					forks={selectedProduct.forksRepo}
@@ -80,15 +82,17 @@ const Product = ({ selectedProduct, user }) => {
 				/>
 				<ContentCard />
 			</Grid>
-			{hasAppFrame && <Grid  className={classes.contentGrid} direction="column"  item>
-				<AppFrame
-					sessionTime={sessionTime}
-					expired={expired}
-					runApp={run}
-					appId={selectedProduct.publicKey}
-					handleFrameStart={onStartApp}
-				/>
-			</Grid>}
+			{hasAppFrame && (
+				<Grid className={classes.contentGrid} direction="column" item>
+					<AppFrame
+						sessionTime={sessionTime}
+						expired={expired}
+						runApp={run}
+						appId={selectedProduct.publicKey}
+						handleFrameStart={onStartApp}
+					/>
+				</Grid>
+			)}
 		</Grid>
 	);
 };

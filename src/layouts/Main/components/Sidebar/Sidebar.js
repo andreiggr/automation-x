@@ -46,7 +46,7 @@ const Sidebar = (props) => {
 	const publicPages = [
 		{
 			title: 'Apps',
-			href: '/products',
+			href: '/',
 			icon: <AirplayIcon />
 		},
 		{

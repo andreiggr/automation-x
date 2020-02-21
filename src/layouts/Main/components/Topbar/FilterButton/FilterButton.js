@@ -11,6 +11,10 @@ const FilterButton = (props) => {
 			position: 'relative',
 			display: 'flex',
 			alignItems: 'center'
+		},
+		button: {
+			fontSize: '15px',
+			fontWeight: 'bold'
 		}
 	}));
 	const { className, category, setActiveFilter, setSearchData, ...rest } = props;
@@ -37,13 +41,14 @@ const FilterButton = (props) => {
 	return (
 		<div className={classes.root}>
 			<Button
+				className={classes.button}
 				aria-owns={open ? 'simple-menu' : null}
 				aria-haspopup="true"
 				onMouseOver={(e) => onMenuOpen(e)}
 				onMouseOut={() => setOpen(false)}
 			>
 				{id}
-				<ExpandMoreIcon />
+				<ExpandMoreIcon color="action" />
 			</Button>
 			<Menu
 				className={classes.menu}
@@ -56,7 +61,7 @@ const FilterButton = (props) => {
 				}}
 			>
 				{items.map((item, index) => (
-					<MenuItem onClick={() => onSetFilter(item)} key={index}>
+					<MenuItem dense={true} onClick={() => onSetFilter(item)} key={index}>
 						{item}
 					</MenuItem>
 				))}
