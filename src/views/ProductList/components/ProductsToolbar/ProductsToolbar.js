@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		alignItems: 'center',
 		flexWrap: 'wrap',
-		justifyContent: 'flex-start',
+		justifyContent: 'space-between',
 		marginTop: theme.spacing(1)
 	},
 	spacer: {
@@ -36,6 +36,13 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: theme.spacing(1),
 		height: '36px',
 		maxWidth: '200px'
+	},
+	alignEnd: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'flex-end',
+		maxWidth: '750px',
+		minWidth: '350px'
 	}
 }));
 
@@ -44,7 +51,7 @@ const ProductsToolbar = (props) => {
 
 	const classes = useStyles();
 
-	const [search, setSearch] = useState('');
+	const [ search, setSearch ] = useState('');
 
 	const onSearch = (data) => {
 		const searchData = data.toLowerCase().replace(/[^a-zA-Z]/g, '');
@@ -59,18 +66,19 @@ const ProductsToolbar = (props) => {
 		<div {...rest} className={clsx(classes.root, className)}>
 			<div className={classes.row}>
 				<Categories categories={filters} />
-				<span className={classes.spacer} />
-				<SearchInput
-					className={classes.searchInput}
-					onChange={(event) => onSearch(event.target.value)}
-					placeholder="Search product"
-					value={search}
-				/>
-				<Link to={user ? "" : "/sign-in"}>
-					<Button color="primary" variant="contained">
-						Add product
-					</Button>
-				</Link>
+				<div className={classes.alignEnd}>
+					<SearchInput
+						className={classes.searchInput}
+						onChange={(event) => onSearch(event.target.value)}
+						placeholder="Search product"
+						value={search}
+					/>
+					<Link to={user ? '' : '/sign-in'}>
+						<Button color="primary" variant="contained">
+							Add product
+						</Button>
+					</Link>
+				</div>
 			</div>
 		</div>
 	);
