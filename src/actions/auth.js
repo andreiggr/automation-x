@@ -78,6 +78,10 @@ export const loginUser = (email, password) => (dispatch) => {
 		.then((user) => {
 			dispatch(receiveLogin(user));
 		})
+		.then(() => {
+			dispatch(loginError(''))
+			dispatch(signupError(''))
+		})
 		.catch((error) => {
 			//Do something with the error if you want!
 			dispatch(loginError(error));
@@ -102,8 +106,11 @@ export const signUp = (email, password) => (dispatch) => {
 	firebase
 		.auth()
 		.createUserWithEmailAndPassword(email, password)
-		.then(() => dispatch(signupError('')))
-		.then(()=> dispatch(loginUser(email,password)))
+		.then(() => {
+			dispatch(loginError(''))
+			dispatch(signupError(''))
+		})
+		.then(() => dispatch(loginUser(email, password)))
 		.catch((error) => {
 			dispatch(signupError(error));
 		});
@@ -135,10 +142,30 @@ const passwordUpdateError = (error) => {
 	};
 };
 
-export const googleLogin = () => {
-	
+export const googleLogin = () => (dispatch) => {
+
 	var googleProvider = new firebase.auth.GoogleAuthProvider();
 
-	firebase.auth().signInWithPopup(googleProvider);
+	firebase.auth().signInWithPopup(googleProvider)
+		.then(user => {
+			dispatch(loginError(''))
+			dispatch(signupError(''))
+			dispatch(receiveLogin(user));
+		})
+		.catch((error) => dispatch(loginError(error)));
+
+}
+
+export const gitLogin = () => (dispatch) => {
+
+	var provider = new firebase.auth.GithubAuthProvider();
+
+	firebase.auth().signInWithPopup(provider)
+		.then(user => {
+			dispatch(loginError(''))
+			dispatch(signupError(''))
+			dispatch(receiveLogin(user));
+		})
+		.catch((error) => dispatch(loginError(error)));
 
 }

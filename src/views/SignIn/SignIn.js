@@ -8,7 +8,7 @@ import { Grid, Button, IconButton, TextField, Link, Typography } from '@material
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { loginUser, googleLogin } from '../../actions/auth'
+import { loginUser, googleLogin, gitLogin } from '../../actions/auth'
 
 import { Google as GoogleIcon } from 'icons';
 import GitHubIcon from '@material-ui/icons/GitHub';
@@ -124,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignIn = (props) => {
-	const { history, logIn, loginError, user, googleLogin } = props;
+	const { history, logIn, loginError, user, googleAuth, gitAuth } = props;
 
 	const classes = useStyles();
 
@@ -181,7 +181,10 @@ const SignIn = (props) => {
 	const hasError = (field) => (formState.touched[field] && formState.errors[field] ? true : false);
 
 	const handleGoogleLogin = () => {
-		googleLogin()
+		googleAuth()
+	}
+	const handleGitLogin = () => {
+		gitAuth()
 	}
 
 	return (
@@ -244,6 +247,7 @@ const SignIn = (props) => {
 											color="primary"
 											size="large"
 											variant="contained"
+											onClick={() => handleGitLogin()}
 										>
 											<GitHubIcon className={classes.socialIcon} />
 											Login with GitHub
@@ -328,7 +332,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		logIn: (email, password) => dispatch(loginUser(email, password)),
-		googleLogin: () => dispatch(googleLogin()),
+		googleAuth: () => dispatch(googleLogin()),
+		gitAuth: () => dispatch(gitLogin())
 	};
 };
 

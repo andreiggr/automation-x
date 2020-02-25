@@ -23,7 +23,7 @@ const Settings = ({ user, history }) => {
 	return (
 		<div className={classes.root}>
 			<Grid container spacing={4}>
-				<Grid item md={7} xs={12}>
+				<Grid item md={5} xs={12}>
 					{user && <AccountDetails />}
 				</Grid>
 				<Grid item md={5} xs={12}>
@@ -31,9 +31,9 @@ const Settings = ({ user, history }) => {
 				</Grid>
 			</Grid>
 			<Grid container spacing={4}>
-				<Grid item md={7} xs={12}>
+				{/* <Grid item md={7} xs={12}>
 					<Notifications />
-				</Grid>
+				</Grid> */}
 				<Grid item md={5} xs={12}>
 					<Password />
 				</Grid>
