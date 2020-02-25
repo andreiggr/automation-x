@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
-import { Button, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { Button, FormControl, InputLabel, Select, MenuItem, IconButton } from '@material-ui/core';
 import { SearchInput } from 'components';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { filters } from './filterData';
 import { setActiveFilter, setSearchData } from 'actions';
 import Categories from 'layouts/Main/components/Topbar/Categories/Categories';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const useStyles = makeStyles((theme) => ({
 	root: {},
@@ -51,7 +52,7 @@ const ProductsToolbar = (props) => {
 
 	const classes = useStyles();
 
-	const [ search, setSearch ] = useState('');
+	const [search, setSearch] = useState('');
 
 	const onSearch = (data) => {
 		const searchData = data.toLowerCase().replace(/[^a-zA-Z]/g, '');
@@ -75,7 +76,8 @@ const ProductsToolbar = (props) => {
 					/>
 					<Link to={user ? '' : '/sign-in'}>
 						<Button color="primary" variant="contained">
-							Add product
+							<CloudUploadIcon style={{ marginRight: "7px" }} />
+							Add App
 						</Button>
 					</Link>
 				</div>
