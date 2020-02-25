@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	imageContainer: {
 		height: 200,
-		width: 200,
 		margin: '0 auto',
 		borderRadius: '5px',
 		overflow: 'hidden',
@@ -28,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 		justifyContent: 'center',
 		cursor: 'pointer',
-		marginBottom: 10
+		marginBottom: 10,
+		boxShadow: '0 0 20px 3px lightgrey'
 	},
 	image: {
-		width: '100%'
 	},
 
 	statsItem: {
@@ -43,7 +42,12 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: theme.spacing(1)
 	},
 	title: {
-		minHeight: '50px'
+		overflow: "hidden",
+		textOverflow: "ellipsis",
+		display: "-webkit-box",
+		webkitBoxOriend: "vertical",
+		webkitLineClamp: 2,
+		height: 50
 	}
 }));
 
