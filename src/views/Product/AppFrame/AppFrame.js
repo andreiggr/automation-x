@@ -7,7 +7,7 @@ import styles from './Styles';
 const useStyles = makeStyles((theme) => styles);
 
 const AppFrame = ({ appId, runApp, expired, handleFrameStart, sessionTime }) => {
-	const src = `https://appetize.io/embed/${appId}?device=android&orientation=portrait&scale=43&xdocMsg=true&deviceColor=white&debug=false&screenOnly=false`;
+	const src = `https://appetize.io/embed/${appId}?device=android&orientation=portrait&scale=55&xdocMsg=true&deviceColor=white&debug=false&screenOnly=false`;
 	const countDownTime = sessionTime / 1000;
 
 	var iframe = document.querySelector('iframe');
@@ -36,7 +36,7 @@ const AppFrame = ({ appId, runApp, expired, handleFrameStart, sessionTime }) => 
 	return (
 		<div className={expired ? classes.expiredFrame : classes.appFrame}>
 			<div className={classes.phoneContent}>
-				<iframe frameBorder="0" height="520px" scrolling="no" src={src} width="300px" />
+				<iframe frameBorder="0" height="720px" scrolling="no" src={src} width="400px" />
 				{runApp && (
 					<div className={classes.countdown}>
 						<CountdownCircleTimer
@@ -48,7 +48,7 @@ const AppFrame = ({ appId, runApp, expired, handleFrameStart, sessionTime }) => 
 					</div>
 				)}
 				{expired && (
-					<Typography className={classes.expiredText} align="center" color="error" variant="h5">
+					<Typography className={classes.expiredText} align="center" color="textSecondary" variant="h4">
 						Your time has expired!
 					</Typography>
 				)}

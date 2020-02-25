@@ -36,14 +36,18 @@ const useStyles = makeStyles((theme) => ({
 	contentGrid: {
 		flex: 1,
 		flexBasis: 'auto'
+	},
+	soloGrid: {
+		maxWidth: '800px',
+		flexBasis: 'auto'
 	}
 }));
 
 const Product = ({ selectedProduct, user }) => {
 	const classes = useStyles();
 
-	const [ run, setRun ] = useState(false);
-	const [ expired, setExpired ] = useState(false);
+	const [run, setRun] = useState(false);
+	const [expired, setExpired] = useState(false);
 
 	const isSigned = user ? true : false;
 	const sessionTime = isSigned ? 90000 : 40000;
@@ -63,7 +67,7 @@ const Product = ({ selectedProduct, user }) => {
 
 	return (
 		<Grid className={classes.root} container direction="row">
-			<Grid className={classes.contentGrid} direction="column">
+			<Grid className={hasAppFrame ? classes.soloGrid : classes.contentGrid} direction="column">
 				<div className={classes.contentBar}>
 					<Link className={classes.backButton} to="/">
 						<ArrowBackIosIcon fontSize="small" />

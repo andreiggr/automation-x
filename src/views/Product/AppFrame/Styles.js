@@ -16,13 +16,13 @@ const styles = {
 	},
 	countdown: {
 		position: 'absolute',
-		bottom: '18px',
-		left: '104px'
+		bottom: '82px',
+		left: '150px'
 	},
 	expiredText: {
-		bottom: '30px',
+		bottom: '100px',
 		position: 'absolute',
-		left: '55px'
+		left: '75px'
 	},
 	runCard: {
 		display: 'flex',

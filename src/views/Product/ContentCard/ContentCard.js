@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		'& a': {
-			color: 'black',
+			color: '#3F51B5',
+			textDecoration:"none"
 		},
 		'& .headline-primary': {
 			paddingBottom: '5px',
@@ -36,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
 		},
 		'& img': {
 			marginTop: "10px",
-			marginBottom: "10px"
+			marginBottom: "10px",
+			maxWidth:"100%"
 		}
 	}
 }));
