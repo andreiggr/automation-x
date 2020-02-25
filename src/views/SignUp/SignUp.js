@@ -8,6 +8,10 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { signUp } from '../../actions/auth';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import { Google as GoogleIcon } from 'icons';
+import {googleLogin} from "actions/auth";
+
 
 const schema = {
 	email: {
@@ -123,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = (props) => {
-	const { history, signUp, signupError, user } = props;
+	const { history, signUp, signupError, user, googleAuth } = props;
 
 	const classes = useStyles();
 
@@ -178,6 +182,14 @@ const SignUp = (props) => {
 
 	const hasError = (field) => (formState.touched[field] && formState.errors[field] ? true : false);
 
+	const handleGoogleSignUp = () => {
+		googleAuth();
+	}
+
+	const handleGitSignUp = () => {
+		console.log("git")
+	}
+
 	return (
 		<div className={classes.root}>
 			<Grid className={classes.grid} container>
@@ -208,10 +220,46 @@ const SignUp = (props) => {
 						<div className={classes.contentBody}>
 							<form className={classes.form} onSubmit={handleSignUp}>
 								<Typography className={classes.title} variant="h2">
-									Create new account
+									Sign up
 								</Typography>
-								<Typography color="textSecondary" gutterBottom>
-									Use your email to create new account
+								<Typography
+									color="textSecondary"
+									gutterBottom
+								>
+									Create new account with social
+                </Typography>
+								<Grid
+									className={classes.socialButtons}
+									container
+									spacing={2}
+								>
+
+									<Grid item>
+										<Button
+											onClick={() => handleGoogleSignUp()}
+											size="large"
+											variant="contained"
+											color="primary"
+										>
+											<GoogleIcon className={classes.socialIcon} />
+											SignUp with Google
+                    </Button>
+									</Grid>
+									<Grid item>
+										<Button
+											onClick={() => handleGitSignUp()}
+											color="primary"
+											size="large"
+											variant="contained"
+										>
+											<GitHubIcon className={classes.socialIcon} />
+											SignUp with GitHub
+                    </Button>
+									</Grid>
+								</Grid>
+
+								<Typography color="textSecondary" style={{ marginTop: "20px" }}>
+									Or use your email to create new account
 								</Typography>
 								<TextField
 									className={classes.textField}
@@ -303,6 +351,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		signUp: (email, password) => dispatch(signUp(email, password)),
+		googleAuth: () => dispatch(googleLogin()),
 	};
 };
 

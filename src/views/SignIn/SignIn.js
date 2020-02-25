@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
@@ -7,9 +8,10 @@ import { Grid, Button, IconButton, TextField, Link, Typography } from '@material
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { loginUser } from '../../actions/auth';
+import { loginUser, googleLogin } from '../../actions/auth'
 
-import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
+import { Google as GoogleIcon } from 'icons';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 const schema = {
 	email: {
@@ -122,11 +124,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignIn = (props) => {
-	const { history, logIn, loginError, user } = props;
+	const { history, logIn, loginError, user, googleLogin } = props;
 
 	const classes = useStyles();
 
-	const [ formState, setFormState ] = useState({
+	const [formState, setFormState] = useState({
 		isValid: false,
 		values: {},
 		touched: {},
@@ -145,7 +147,7 @@ const SignIn = (props) => {
 				errors: errors || {}
 			}));
 		},
-		[ formState.values, user ]
+		[formState.values, user]
 	);
 
 	const handleBack = () => {
@@ -177,6 +179,10 @@ const SignIn = (props) => {
 	};
 
 	const hasError = (field) => (formState.touched[field] && formState.errors[field] ? true : false);
+
+	const handleGoogleLogin = () => {
+		googleLogin()
+	}
 
 	return (
 		<div className={classes.root}>
@@ -210,47 +216,48 @@ const SignIn = (props) => {
 								<Typography className={classes.title} variant="h2">
 									Sign in
 								</Typography>
-								{/* <Typography
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  Sign in with social media
+								<Typography
+									color="textSecondary"
+									gutterBottom
+								>
+									Sign in with social media
                 </Typography>
-                <Grid
-                  className={classes.socialButtons}
-                  container
-                  spacing={2}
-                >
-                  <Grid item>
-                    <Button
-                      color="primary"
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained"
-                    >
-                      <FacebookIcon className={classes.socialIcon} />
-                      Login with Facebook
+								<Grid
+									className={classes.socialButtons}
+									container
+									spacing={2}
+								>
+
+									<Grid item>
+										<Button
+											size="large"
+											variant="contained"
+											color="primary"
+											onClick={() => handleGoogleLogin()}
+										>
+											<GoogleIcon className={classes.socialIcon} />
+											Login with Google
                     </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained"
-                    >
-                      <GoogleIcon className={classes.socialIcon} />
-                      Login with Google
+									</Grid>
+									<Grid item>
+										<Button
+											color="primary"
+											size="large"
+											variant="contained"
+										>
+											<GitHubIcon className={classes.socialIcon} />
+											Login with GitHub
                     </Button>
-                  </Grid>
-                </Grid>
-                <Typography
-                  align="center"
-                  className={classes.sugestion}
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  or login with email address
-                </Typography> */}
+									</Grid>
+								</Grid>
+								<Typography
+									align="center"
+									className={classes.sugestion}
+									color="textSecondary"
+									variant="body1"
+								>
+									or login with email address
+                </Typography>
 								<TextField
 									className={classes.textField}
 									error={hasError('email')}
@@ -320,7 +327,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		logIn: (email, password) => dispatch(loginUser(email, password))
+		logIn: (email, password) => dispatch(loginUser(email, password)),
+		googleLogin: () => dispatch(googleLogin()),
 	};
 };
 
