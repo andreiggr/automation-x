@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
@@ -8,7 +8,7 @@ import { Grid, Button, IconButton, TextField, Link, Typography } from '@material
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { loginUser, googleLogin, gitLogin } from '../../actions/auth'
+import { loginUser, googleLogin, gitLogin, clearErrors } from '../../actions/auth'
 
 import { Google as GoogleIcon } from 'icons';
 import GitHubIcon from '@material-ui/icons/GitHub';
@@ -124,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignIn = (props) => {
-	const { history, logIn, loginError, user, googleAuth, gitAuth } = props;
+	const { history, logIn, loginError, user, googleAuth, gitAuth, resetErrors } = props;
 
 	const classes = useStyles();
 
@@ -156,7 +156,7 @@ const SignIn = (props) => {
 
 	const handleChange = (event) => {
 		event.persist();
-
+		resetErrors()
 		setFormState((formState) => ({
 			...formState,
 			values: {
@@ -291,18 +291,26 @@ const SignIn = (props) => {
 										{loginError}
 									</Typography>
 								)}
-								<Button
-									className={classes.signInButton}
-									color="primary"
-									disabled={!formState.isValid}
-									fullWidth
-									//onClick={handleSignIn}
-									type="submit"
-									size="large"
-									variant="contained"
+
+								<GoogleReCaptchaProvider
+									reCaptchaKey="6Ldz7N0UAAAAALfJ_2U0-aeqlJD4PMrK2MF0J81O"
+									language="en"
 								>
-									Sign in now
+									<Button
+										className={classes.signInButton}
+										color="primary"
+										disabled={!formState.isValid}
+										fullWidth
+										//onClick={handleSignIn}
+										type="submit"
+										size="large"
+										variant="contained"
+									>
+										Sign in now
 								</Button>
+
+								</GoogleReCaptchaProvider>
+
 								<Typography color="textSecondary" variant="body1">
 									Don't have an account?{' '}
 									<Link component={RouterLink} to="/sign-up" variant="h6">
@@ -333,7 +341,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		logIn: (email, password) => dispatch(loginUser(email, password)),
 		googleAuth: () => dispatch(googleLogin()),
-		gitAuth: () => dispatch(gitLogin())
+		gitAuth: () => dispatch(gitLogin()),
+		resetErrors: () => dispatch(clearErrors())
 	};
 };
 

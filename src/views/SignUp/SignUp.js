@@ -9,7 +9,8 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import { Google as GoogleIcon } from 'icons';
-import { googleLogin, gitLogin, signUp } from "actions/auth";
+import { googleLogin, gitLogin, signUp, clearErrors } from "actions/auth";
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 
 
 const schema = {
@@ -138,7 +139,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = (props) => {
-	const { history, signUp, signupError, loginError, user, googleAuth, gitAuth } = props;
+	const { history, signUp, signupError, loginError, user, googleAuth, gitAuth, resetErrors } = props;
 
 	const classes = useStyles();
 
@@ -162,11 +163,12 @@ const SignUp = (props) => {
 				errors: errors || {}
 			}));
 		},
-		[formState.values, signupError, user]
+		[formState.values, user]
 	);
 
 	const handleChange = (event) => {
 		event.persist();
+		resetErrors()
 
 		setFormState((formState) => ({
 			...formState,
@@ -323,17 +325,24 @@ const SignUp = (props) => {
 
 								{signupError && <Typography color="error">{signupError}</Typography>}
 								{loginError && <Typography color="error">{loginError}</Typography>}
-								<Button
-									className={classes.signUpButton}
-									color="primary"
-									disabled={!formState.isValid}
-									fullWidth
-									size="large"
-									type="submit"
-									variant="contained"
+								<GoogleReCaptchaProvider
+									reCaptchaKey="6Ldz7N0UAAAAALfJ_2U0-aeqlJD4PMrK2MF0J81O"
+									language="en"
 								>
-									Sign up now
+									<Button
+										className={classes.signUpButton}
+										color="primary"
+										disabled={!formState.isValid}
+										fullWidth
+										size="large"
+										type="submit"
+										variant="contained"
+									>
+										Sign up now
 								</Button>
+
+								</GoogleReCaptchaProvider>
+
 								<Typography color="textSecondary" variant="body1">
 									Have an account?{' '}
 									<Link component={RouterLink} to="/sign-in" variant="h6">
@@ -366,7 +375,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		signUp: (email, password) => dispatch(signUp(email, password)),
 		googleAuth: () => dispatch(googleLogin()),
-		gitAuth: () => dispatch(gitLogin())
+		gitAuth: () => dispatch(gitLogin()),
+		resetErrors: () => dispatch(clearErrors())
 	};
 };
 

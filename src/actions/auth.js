@@ -14,11 +14,6 @@ export const VERIFY_SUCCESS = 'VERIFY_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 export const PASSWORD_UPDATE_FAILURE = 'PASSWORD_UPDATE_FAILURE';
 
-const requestLogin = () => {
-	return {
-		type: LOGIN_REQUEST
-	};
-};
 
 const receiveLogin = (data) => {
 	return {
@@ -58,35 +53,38 @@ const logoutError = () => {
 	};
 };
 
-const requestVerify = () => {
-	return {
-		type: VERIFY_REQUEST
-	};
-};
-
-const verifySuccess = () => {
-	return {
-		type: VERIFY_SUCCESS
-	};
-};
 
 export const loginUser = (email, password) => (dispatch) => {
-	dispatch(requestLogin());
 	firebase
 		.auth()
 		.signInWithEmailAndPassword(email, password)
 		.then((user) => {
 			dispatch(receiveLogin(user));
 		})
-		.then(() => {
-			dispatch(loginError(''))
-			dispatch(signupError(''))
-		})
 		.catch((error) => {
 			//Do something with the error if you want!
 			dispatch(loginError(error));
 		});
 };
+
+export const signUp = (email, password) => (dispatch) => {
+	firebase
+		.auth()
+		.createUserWithEmailAndPassword(email, password)
+		.then(() => {
+		})
+		.then(() => dispatch(loginUser(email, password)))
+		.catch((error) => {
+			dispatch(signupError(error));
+		});
+};
+
+export const clearErrors = () => (dispatch) => {
+	dispatch(signupError(""));
+	dispatch(loginError(""));
+
+};
+
 
 export const logoutUser = () => (dispatch) => {
 	dispatch(requestLogout());
@@ -102,19 +100,6 @@ export const logoutUser = () => (dispatch) => {
 		});
 };
 
-export const signUp = (email, password) => (dispatch) => {
-	firebase
-		.auth()
-		.createUserWithEmailAndPassword(email, password)
-		.then(() => {
-			dispatch(loginError(''))
-			dispatch(signupError(''))
-		})
-		.then(() => dispatch(loginUser(email, password)))
-		.catch((error) => {
-			dispatch(signupError(error));
-		});
-};
 
 export const doPasswordReset = (email) => (dispatch) => {
 	firebase.auth.sendPasswordResetEmail(email);
@@ -125,7 +110,6 @@ export const doPasswordUpdate = (currentPassword, password) => (dispatch) => {
 	user
 		.updatePassword(password)
 		.then(() => {
-			console.log('Password updated!');
 		})
 		.then(() => {
 			dispatch(logoutUser());
