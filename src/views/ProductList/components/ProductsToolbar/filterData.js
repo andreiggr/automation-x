@@ -98,7 +98,7 @@ const appsFilters = [
 	'TEMPLATES',
 	'APPS',
 	'WALLPAPER',
-	'WEATHEAR',
+	'WEATHER',
 	'GAMES',
 	'NEWS',
 	'BOOK',
