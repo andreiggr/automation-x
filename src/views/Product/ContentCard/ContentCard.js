@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
-import ReactMarkdown from 'react-markdown';
 import MarkdownGithub from 'react-markdown-github';
 import { Card, CardContent, Typography } from '@material-ui/core';
 import Axios from 'axios';
 import { Image, ImageOrLink } from './Image';
-import selectedProduct from 'reducers/selectedProduct';
 import { connect } from 'react-redux';
 import CodeBlock from './CodeBlock/CodeBlock';
 

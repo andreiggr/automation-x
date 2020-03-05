@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/styles';
 import { Typography, Button, Grid } from '@material-ui/core';
-import { ProductsToolbar } from '../ProductList/components';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { GitCard } from './GitCard';
 import { ContentCard } from './ContentCard';
-import PropTypes from 'prop-types';
 import { fetchData, selectProduct } from 'actions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AppFrame from './AppFrame/AppFrame';
+import { CommentsCard } from './CommentsCard';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -85,6 +84,7 @@ const Product = ({ selectedProduct, user }) => {
 					watchers={selectedProduct.watchersRepo}
 				/>
 				<ContentCard />
+				<CommentsCard/>
 			</Grid>
 			{hasAppFrame && (
 				<Grid className={classes.contentGrid} direction="column" item>
