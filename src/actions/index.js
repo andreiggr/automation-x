@@ -1,6 +1,7 @@
 import firebase from '../Firebase/firebase';
 
 export function fetchDataSuccess(data) {
+	console.log('newdata', data);
 	return {
 		type: 'FETCH_DATA',
 		data

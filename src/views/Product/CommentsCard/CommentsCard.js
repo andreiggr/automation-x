@@ -24,45 +24,42 @@ const useStyles = makeStyles((theme) => ({
 	icon: {
 		color: '#66788A',
 		margin: '10px',
-		fontSize: "50px"
-
+		fontSize: '50px'
 	},
 	commentList: {
-		marginTop: "15px"
-
+		marginTop: '15px'
 	},
 	commentCard: {
-		boxShadow: "0 0 0 1px rgba(63,63,68,0.05), 0 1px 3px 0 rgba(63,63,68,0.15)",
+		boxShadow: '0 0 0 1px rgba(63,63,68,0.05), 0 1px 3px 0 rgba(63,63,68,0.15)',
 		padding: '7px',
 		borderRadius: '5px',
-		display: "flex",
+		display: 'flex',
 		alignItems: 'center',
-		marginTop: "7px",
-		marginBottom: "7px"
+		marginTop: '7px',
+		marginBottom: '7px'
 	},
 	user: {
-		color: "#3F51B5",
+		color: '#3F51B5'
 	},
 	date: {
-		color: "grey",
+		color: 'grey',
 		marginLeft: '5px',
-		fontSize: "12px"
+		fontSize: '12px'
 	},
 	head: {
 		display: 'flex',
 		alignItems: 'baseline',
-		marginBottom: "15px"
+		marginBottom: '15px'
 	},
 	addComment: {
 		marginTop: '15px',
-		display: "flex",
-		alignItems: "flex-end"
+		display: 'flex',
+		alignItems: 'flex-end'
 	},
 	input: {
-		marginRight: "10px",
-		width: "60%"
+		marginRight: '10px',
+		width: '60%'
 	}
-
 }));
 
 const CommentsCard = (props) => {
@@ -71,74 +68,68 @@ const CommentsCard = (props) => {
 
 	const comments = selectedProduct.comments;
 
-	const [comment, setComment] = useState('')
+	const [ comment, setComment ] = useState('');
 
-	const onChange = (event) => { setComment(event.target.value) }
+	const onChange = (event) => {
+		setComment(event.target.value);
+	};
 
 	const submitComment = () => {
 		if (user) {
-			handleComment(user.email, comment, selectedProduct.id)
+			handleComment(user.email, comment, selectedProduct.id);
 		} else {
 			history.replace('/sign-in');
 		}
-
-	}
+	};
 
 	return (
-		<Card
-			{...rest}
-			className={clsx(classes.root, className)}
-		>
+		<Card {...rest} className={clsx(classes.root, className)}>
 			<CardContent>
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'left' }}>
-					<Typography
-						align="left"
-						variant="h3"
-					>
+					<Typography align="left" variant="h3">
 						Comments
-						</Typography>
+					</Typography>
 					<div className={classes.addComment}>
-						<TextField multiline value={comment} className={classes.input} onChange={onChange} variant="outlined" label="Add comment" />
-						<Button variant="outlined" color="primary" onClick={submitComment}> Add Comment </Button>
+						<TextField
+							multiline
+							value={comment}
+							className={classes.input}
+							onChange={onChange}
+							variant="outlined"
+							label="Add comment"
+						/>
+						<Button variant="outlined" color="primary" onClick={submitComment}>
+							{' '}
+							Add Comment{' '}
+						</Button>
 					</div>
 					<div className={classes.commentList}>
-						{comments && comments.map((i) => 
-							<div className={classes.commentCard}>
-								<Avatar
-									alt="Person"
-									className={classes.icon}
-									src={
-										//user.photoURL ? user.photoURL : 
-										defaultPic}
-								/>
-								<div className={classes.content}>
-									<div className={classes.head}>
-										<Typography
-											className={classes.user}
-											align="left"
-											variant="h4"
-
-										>
-											{i.user}
-						</Typography>
-										<Typography
-											className={classes.date}
-											align="left"
-										>
-											{i.date}
-						</Typography>
-
+						{comments &&
+							Object.keys(comments).map((i) => (
+								<div key={i} className={classes.commentCard}>
+									<Avatar
+										alt="Person"
+										className={classes.icon}
+										src={
+											//user.photoURL ? user.photoURL :
+											defaultPic
+										}
+									/>
+									<div className={classes.content}>
+										<div className={classes.head}>
+											<Typography className={classes.user} align="left" variant="h4">
+												{comments[i].user}
+											</Typography>
+											<Typography className={classes.date} align="left">
+												{comments[i].date}
+											</Typography>
+										</div>
+										<Typography className={classes.comment} align="left">
+											{comments[i].description}
+										</Typography>
 									</div>
-									<Typography
-										className={classes.comment}
-										align="left"
-									>
-										{i.description}
-						</Typography>
 								</div>
-							</div>
-						)}
-
+							))}
 					</div>
 				</div>
 			</CardContent>
