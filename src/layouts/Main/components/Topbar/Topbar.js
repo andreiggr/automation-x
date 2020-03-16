@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
 		color: 'white',
 		fontSize: '15px',
 		marginRight: '5px'
+	},
+	hireButton: {
+		marginLeft: '82px'
 	}
 }));
 
@@ -50,6 +53,11 @@ const Topbar = (props) => {
 				<RouterLink to="/">
 					<img alt="Logo" src="/images/logos/logo--white.svg" />
 				</RouterLink>
+				<a className={classes.hireButton} href="https://www.linkedin.com/in/profiroiu-mihai-89895aa8/">
+					<Button color="secondary" size="small" variant="contained">
+						Hire a Flutter Dev
+					</Button>
+				</a>
 				<div className={classes.flexGrow} />
 				<Hidden mdDown>
 					<IconButton color="inherit">

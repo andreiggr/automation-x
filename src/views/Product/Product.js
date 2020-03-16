@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 		flexBasis: 'auto'
 	},
 	soloGrid: {
-		maxWidth: '800px',
+		maxWidth: '700px',
 		flexBasis: 'auto'
 	}
 }));
