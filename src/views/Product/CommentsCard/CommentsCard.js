@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Typography, Avatar, TextField, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
-import { addComment } from 'actions/comment';
+import { addComment, selectProduct } from 'actions/index';
 
 const defaultPic = require('../../../assets/defaultPic.png');
 
@@ -63,8 +63,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CommentsCard = (props) => {
-	const { className, selectedProduct, history, user, handleComment, ...rest } = props;
+	const { className, selectedProduct, history, user, handleComment, handleProduct, data, ...rest } = props;
 	const classes = useStyles();
+
+	useEffect(
+		() => {
+			handleProduct(data[selectedProduct.id]);
+		},
+		[ data ]
+	);
 
 	const comments = selectedProduct.comments;
 
@@ -76,7 +83,7 @@ const CommentsCard = (props) => {
 
 	const submitComment = () => {
 		if (user) {
-			handleComment(user.email, comment, selectedProduct.id);
+			handleComment(user.email, comment, selectedProduct);
 		} else {
 			history.replace('/sign-in');
 		}
@@ -140,13 +147,15 @@ const CommentsCard = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		selectedProduct: state.selectedProduct,
-		user: state.auth.user
+		user: state.auth.user,
+		data: state.data
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		handleComment: (user, description, productId) => dispatch(addComment(user, description, productId))
+		handleComment: (user, description, product) => dispatch(addComment(user, description, product)),
+		handleProduct: (product) => dispatch(selectProduct(product))
 	};
 };
 

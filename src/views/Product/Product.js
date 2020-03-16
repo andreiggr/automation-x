@@ -124,9 +124,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		selectProduct: (product) => dispatch(selectProduct(product))
-	};
+	return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
