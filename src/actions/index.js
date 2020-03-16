@@ -1,7 +1,36 @@
 import firebase from '../Firebase/firebase';
+import { injectComment } from 'helpers/injectComment';
+
+export const ADD_COMMENT = 'ADD_COMMENT';
+
+export const addComment = (user, description, product) => (dispatch) => {
+	const date = new Date(Date.now()).toLocaleString();
+
+	const newComment = {
+		user,
+		description,
+		date,
+		rating: 4
+	};
+	firebase
+		.database()
+		.ref('models/' + product.id + '/comments')
+		.push(newComment)
+		.then((e) => dispatch(receiveComment(newComment, product.id, e)));
+	// dispatch(receiveComment(newComment, productId)));
+};
+
+export const receiveComment = (newComment, productId, event) => {
+	const commentId = event.path.pieces_[event.path.pieces_.length - 1];
+	return {
+		type: ADD_COMMENT,
+		newComment,
+		commentId,
+		productId
+	};
+};
 
 export function fetchDataSuccess(data) {
-	console.log('newdata', data);
 	return {
 		type: 'FETCH_DATA',
 		data

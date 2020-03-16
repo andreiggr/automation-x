@@ -1,24 +1,11 @@
-export const injectComment = (state, id, comment) => {
-	console.log(id);
-	var newState = [
-		...state,
-		{
-			...state[id],
-			comments: {
-				...state[id].comments,
-				comment
-			}
-		}
-	];
-	console.log('newstate', newState);
-	// var newState = [ ...state ].map((product, index) => {
-	// 	if (index === id) {
-	// 		var newProduct = {
-	// 			...product,
-	// 			comments: {}
-	// 		};
-	// 	}
-	// });
+export const injectComment = (state, id, commentId, comment) => {
+	var product = state[id];
+	var newComments = {
+		...product.comments
+	};
+	newComments[`${commentId}`] = comment;
+	var newProduct = { ...product, comments: newComments };
 
+	var newState = [ ...state.slice(0, id), newProduct, ...state.slice(id + 1) ];
 	return newState;
 };
