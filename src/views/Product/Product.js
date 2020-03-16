@@ -45,8 +45,8 @@ const useStyles = makeStyles((theme) => ({
 const Product = ({ selectedProduct, user }) => {
 	const classes = useStyles();
 
-	const [run, setRun] = useState(false);
-	const [expired, setExpired] = useState(false);
+	const [ run, setRun ] = useState(false);
+	const [ expired, setExpired ] = useState(false);
 
 	const isSigned = user ? true : false;
 	const sessionTime = isSigned ? 90000 : 40000;
@@ -84,7 +84,7 @@ const Product = ({ selectedProduct, user }) => {
 					watchers={selectedProduct.watchersRepo}
 				/>
 				<ContentCard />
-				<CommentsCard/>
+				<CommentsCard />
 			</Grid>
 			{hasAppFrame && (
 				<Grid className={classes.contentGrid} direction="column" item>
@@ -92,7 +92,7 @@ const Product = ({ selectedProduct, user }) => {
 						sessionTime={sessionTime}
 						expired={expired}
 						runApp={run}
-						appId={selectedProduct.publicKey}
+						appId={selectedProduct.appId}
 						handleFrameStart={onStartApp}
 					/>
 				</Grid>
