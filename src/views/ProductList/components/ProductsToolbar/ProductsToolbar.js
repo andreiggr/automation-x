@@ -52,7 +52,7 @@ const ProductsToolbar = (props) => {
 
 	const classes = useStyles();
 
-	const [search, setSearch] = useState('');
+	const [ search, setSearch ] = useState('');
 
 	const onSearch = (data) => {
 		const searchData = data.toLowerCase().replace(/[^a-zA-Z]/g, '');
@@ -74,12 +74,12 @@ const ProductsToolbar = (props) => {
 						placeholder="Search product"
 						value={search}
 					/>
-					<Link to={user ? '' : '/sign-in'}>
+					{/* <Link to={user ? '' : '/sign-in'}>
 						<Button color="primary" variant="contained">
 							<CloudUploadIcon style={{ marginRight: "7px" }} />
 							Add App
 						</Button>
-					</Link>
+					</Link> */}
 				</div>
 			</div>
 		</div>

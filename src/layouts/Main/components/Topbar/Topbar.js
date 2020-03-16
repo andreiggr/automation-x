@@ -30,6 +30,18 @@ const useStyles = makeStyles((theme) => ({
 	},
 	hireButton: {
 		marginLeft: '82px'
+	},
+	customButton: {
+		backgroundColor: '#663dff',
+		backgroundImage: 'linear-gradient(319deg, #663dff 0%, #aa00ff 37%, #cc4499 100%)',
+		color: 'white'
+	},
+	login: {
+		backgroundColor: '#7fd82b',
+		backgroundImage: 'linear-gradient(319deg, #7fd82b 0%, #ef4063 37%, #e557c6 100%)',
+		color: 'white',
+		fontSize: '16px',
+		fontWeight: 'bold'
 	}
 }));
 
@@ -54,7 +66,7 @@ const Topbar = (props) => {
 					<img alt="Logo" src="/images/logos/logo--white.svg" />
 				</RouterLink>
 				<a className={classes.hireButton} href="https://www.linkedin.com/in/profiroiu-mihai-89895aa8/">
-					<Button color="secondary" size="small" variant="contained">
+					<Button className={classes.customButton} size="small" variant="contained">
 						Hire a Flutter Dev
 					</Button>
 				</a>
@@ -76,7 +88,7 @@ const Topbar = (props) => {
 						</IconButton>
 					)}
 					{!user && (
-						<Button color="secondary" onClick={handleLogin} size="small" variant="contained">
+						<Button className={classes.login} onClick={handleLogin} size="small" variant="contained">
 							Log in
 						</Button>
 					)}

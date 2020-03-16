@@ -39,6 +39,13 @@ const useStyles = makeStyles((theme) => ({
 	soloGrid: {
 		maxWidth: '700px',
 		flexBasis: 'auto'
+	},
+	customButton: {
+		backgroundColor: '#ff1493',
+		backgroundImage: 'linear-gradient(319deg, #ff1493 0%, #0000ff 37%, #ff8c00 100%)',
+		color: 'white',
+		fontSize: '14px',
+		fontWeight: 'bold'
 	}
 }));
 
@@ -73,7 +80,12 @@ const Product = ({ selectedProduct, user }) => {
 						<Typography className={classes.categoryTitle}>Go back</Typography>
 					</Link>
 					{hasAppFrame && (
-						<Button color="primary" disabled={expired} onClick={onStartApp} variant="contained">
+						<Button
+							className={classes.customButton}
+							disabled={expired}
+							onClick={onStartApp}
+							variant="contained"
+						>
 							Run on Emulator
 						</Button>
 					)}
