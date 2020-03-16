@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { Divider, Drawer } from '@material-ui/core';
+import { Divider, Drawer, Button } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import AirplayIcon from '@material-ui/icons/Airplay';
@@ -28,13 +28,26 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		height: '100%',
-		padding: theme.spacing(2)
+		padding: theme.spacing(2),
+		position: 'relative'
 	},
 	divider: {
 		margin: theme.spacing(2, 0)
 	},
 	nav: {
 		marginBottom: theme.spacing(2)
+	},
+	hireButton: {
+		justifyContent: 'center',
+		display: 'flex',
+		position: 'absolute',
+		bottom: '30px',
+		left: '45px'
+	},
+	customButton: {
+		backgroundColor: '#663dff',
+		backgroundImage: 'linear-gradient(319deg, #663dff 0%, #aa00ff 37%, #cc4499 100%)',
+		color: 'white'
 	}
 }));
 
@@ -91,7 +104,11 @@ const Sidebar = (props) => {
 					</React.Fragment>
 				)}
 				<SidebarNav className={classes.nav} pages={pages} onLogout={() => logout()} />
-				{/* <UpgradePlan /> */}
+				<a className={classes.hireButton} href="https://www.linkedin.com/in/profiroiu-mihai-89895aa8/">
+					<Button className={classes.customButton} size="small" variant="contained">
+						Hire a Flutter Dev
+					</Button>
+				</a>
 			</div>
 		</Drawer>
 	);

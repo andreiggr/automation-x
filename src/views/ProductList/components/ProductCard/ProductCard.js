@@ -13,6 +13,7 @@ import data from 'views/Dashboard/components/LatestOrders/data';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
+		position: 'relative',
 		maxWidth: '350px',
 		'&:hover': {
 			boxShadow: '0px 0px 2px 1px #3F51B5'
@@ -30,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: 10,
 		boxShadow: '0 0 20px 3px lightgrey'
 	},
-	image: {
-	},
-
 	statsItem: {
 		display: 'flex',
 		alignItems: 'center'
@@ -42,12 +40,36 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: theme.spacing(1)
 	},
 	title: {
-		overflow: "hidden",
-		textOverflow: "ellipsis",
-		display: "-webkit-box",
-		webkitBoxOriend: "vertical",
+		overflow: 'hidden',
+		textOverflow: 'ellipsis',
+		display: '-webkit-box',
+		webkitBoxOriend: 'vertical',
 		webkitLineClamp: 2,
 		height: 50
+	},
+	statusTag: {
+		position: 'absolute'
+	},
+	buildSuccess: {
+		background: '#10C95A',
+		width: '20px',
+		borderRadius: '30px',
+		marginRight: '10px'
+	},
+	buildFailed: {
+		background: 'red',
+		width: '20px',
+		borderRadius: '30px',
+		marginRight: '10px'
+	},
+	buidStatus: {
+		position: 'absolute',
+		top: '20px',
+		background: '#F5F5F5',
+		right: '20px',
+		display: 'flex',
+		padding: '5px',
+		borderRadius: '10px'
 	}
 }));
 
@@ -59,6 +81,8 @@ const ProductCard = (props) => {
 	const productRoute = `/product/${product.id}`;
 
 	var title = product.title.length < 45 ? product.title : product.title.substring(0, 45) + '..';
+
+	const hasBuild = product.appId === 'null' ? false : true;
 
 	return (
 		<Card {...rest} className={clsx(classes.root, className)}>
@@ -73,6 +97,10 @@ const ProductCard = (props) => {
 						</Typography>
 					</div>
 				</Link>
+				<div className={classes.buidStatus}>
+					<div className={hasBuild ? classes.buildSuccess : classes.buildFailed} />
+					<Typography variant="h6">Build {hasBuild ? 'success' : 'failed'}</Typography>
+				</div>
 			</CardContent>
 			<Divider />
 			<CardActions>
