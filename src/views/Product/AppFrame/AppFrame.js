@@ -7,7 +7,7 @@ import styles from './Styles';
 const useStyles = makeStyles((theme) => styles);
 
 const AppFrame = ({ appId, runApp, expired, handleFrameStart, sessionTime }) => {
-	const src = `https://appetize.io/embed/${appId}?device=android&orientation=portrait&scale=55&xdocMsg=true&deviceColor=white&debug=false&screenOnly=false`;
+	const src = `https://appetize.io/embed/${appId}?device=android&orientation=portrait&scale=55&xdocMsg=true&deviceColor=black&debug=false&screenOnly=false`;
 	const countDownTime = sessionTime / 1000;
 
 	var iframe = document.querySelector('iframe');
